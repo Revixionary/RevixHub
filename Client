@@ -1,0 +1,509 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local playergui = player:WaitForChild("PlayerGui")
+
+-- =====================
+-- GUI SETUP
+-- =====================
+
+local gui = Instance.new("ScreenGui", playergui)
+gui.Name = "Hub"
+gui.ResetOnSpawn = false
+
+local Main = Instance.new("ImageLabel", gui)
+Main.Name = "Main"
+Main.Size = UDim2.new(0, 716, 0, 301)
+Main.Position = UDim2.new(0.231, 0, 0.226, 0)
+Main.Image = "rbxassetid://116609435350470"
+
+local UIStroke = Instance.new("UIStroke", Main)
+UIStroke.Thickness = 2
+
+local Minimize = Instance.new("TextButton", Main)
+Minimize.Name = "Minimize"
+Minimize.Size = UDim2.new(0, 72, 0, 23)
+Minimize.Position = UDim2.new(0.899, 0, -0.076, 0)
+Minimize.Font = Enum.Font.SourceSansBold
+Minimize.Text = "-"
+Minimize.TextSize = 40
+Minimize.TextColor3 = Color3.new(1, 1, 1)
+Minimize.BackgroundColor3 = Color3.new(0, 0, 0)
+
+local UIStrokeMin1 = Instance.new("UIStroke", Minimize)
+UIStrokeMin1.Thickness = 2
+
+local UIStrokeMin2 = Instance.new("UIStroke", Minimize)
+UIStrokeMin2.Thickness = 2
+UIStrokeMin2.ApplyStrokeMode = "Border"
+
+local Title = Instance.new("TextLabel", Main)
+Title.Name = "Title"
+Title.Size = UDim2.new(0, 200, 0, 27)
+Title.Position = UDim2.new(0.36, 0, 1, 0)
+Title.Font = Enum.Font.SourceSansBold
+Title.Text = "Revix Hub"
+Title.TextScaled = true
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.BackgroundTransparency = 1
+
+local UIStrokeTitle = Instance.new("UIStroke", Title)
+UIStrokeTitle.Thickness = 2
+
+local Container = Instance.new("Frame", Main)
+Container.Name = "Container"
+Container.Size = UDim2.new(0, 691, 0, 279)
+Container.Position = UDim2.new(0.018, 0, 0.037, 0)
+Container.BackgroundTransparency = 0.8
+Container.BackgroundColor3 = Color3.new(1, 1, 1)
+
+local UIStrokeContainer = Instance.new("UIStroke", Container)
+UIStrokeContainer.Thickness = 2
+
+-- TP Button
+local Tp = Instance.new("TextButton", Container)
+Tp.Name = "Tp"
+Tp.Size = UDim2.new(0, 152, 0, 31)
+Tp.Font = Enum.Font.SourceSansBold
+Tp.Text = "TP"
+Tp.TextScaled = true
+Tp.TextColor3 = Color3.new(1, 1, 1)
+Tp.BackgroundColor3 = Color3.new(0, 0, 0)
+
+local UIStrokeTp = Instance.new("UIStroke", Tp)
+UIStrokeTp.Color = Color3.new(1, 1, 1)
+UIStrokeTp.ApplyStrokeMode = "Border"
+
+-- Aimlock Button
+local Aimlock = Tp:Clone()
+Aimlock.Name = "Aimlock"
+Aimlock.Text = "Aimlock"
+Aimlock.Parent = Container
+
+-- Fly Button
+local Fly = Tp:Clone()
+Fly.Name = "Fly"
+Fly.Text = "Fly"
+Fly.Parent = Container
+
+-- TpWalk Button
+local TpWalk = Tp:Clone()
+TpWalk.Name = "TpWalk"
+TpWalk.Text = "TpWalk"
+TpWalk.Parent = Container
+
+-- MouseUnlock Button
+local MouseUnlock = Tp:Clone()
+MouseUnlock.Name = "MouseUnlock"
+MouseUnlock.Text = "MouseUnlock"
+MouseUnlock.Parent = Container
+
+local UIGridLayout = Instance.new("UIGridLayout", Container)
+UIGridLayout.CellSize = UDim2.new(0, 150, 0, 30)
+UIGridLayout.CellPadding = UDim2.new(0, 30, 0, 30)
+
+local PlayerList = Instance.new("Frame", Main)
+PlayerList.Name = "PlayerList"
+PlayerList.Size = UDim2.new(0, 181, 0, 301)
+PlayerList.Position = UDim2.new(-0.285, 0, 0, 0)
+PlayerList.BackgroundTransparency = 0.4
+PlayerList.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+PlayerList.Visible = false
+
+local UIStrokePlayerList = Instance.new("UIStroke", PlayerList)
+UIStrokePlayerList.Thickness = 2
+
+local ScrollingList = Instance.new("ScrollingFrame", PlayerList)
+ScrollingList.Name = "List"
+ScrollingList.Size = UDim2.new(0, 181, 0, 301)
+ScrollingList.Position = UDim2.new(0, 0, 0, 0)
+ScrollingList.BackgroundTransparency = 1
+ScrollingList.ScrollBarThickness = 5
+
+local UIListLayout = Instance.new("UIListLayout", ScrollingList)
+UIListLayout.Padding = UDim.new(0, 3)
+
+local TemplatePlayer = Instance.new("TextButton", ScrollingList)
+TemplatePlayer.Name = "Template"
+TemplatePlayer.Size = UDim2.new(0, 181, 0, 30)
+TemplatePlayer.Font = Enum.Font.SourceSansBold
+TemplatePlayer.Text = ""
+TemplatePlayer.TextScaled = true
+TemplatePlayer.TextColor3 = Color3.new(1, 1, 1)
+TemplatePlayer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TemplatePlayer.Visible = false
+
+local UIStrokeTemplate = Instance.new("UIStroke", TemplatePlayer)
+UIStrokeTemplate.Thickness = 2
+UIStrokeTemplate.ApplyStrokeMode = "Border"
+UIStrokeTemplate.Color = Color3.new(1, 1, 1)
+
+local Version = Title:Clone()
+Version.Text = "V.1"
+Version.Font = Enum.Font.SourceSansItalic
+Version.Position = UDim2.new(0.363, 0, 1.076, 0)
+Version.Parent = Main
+
+local Currentselected = Title:Clone()
+Currentselected.Text = "Current Selected: None"
+Currentselected.Parent = Main
+Currentselected.Name = "CurrentSelected"
+Currentselected.Position = UDim2.new(-0.299, 0, -0.246, 0)
+
+local CurrentSelectedPlayer = Currentselected:Clone()
+CurrentSelectedPlayer.Text = "Current Selected Player: None"
+CurrentSelectedPlayer.Parent = Main
+CurrentSelectedPlayer.Name = "CurrentSelectedPlayer"
+CurrentSelectedPlayer.Position = UDim2.new(-0.299, 0, -0.133, 0)
+
+local AmountTextBox = Instance.new("TextBox", Main)
+AmountTextBox.Name = "Amount"
+AmountTextBox.Size = UDim2.new(0, 200, 0, 23)
+AmountTextBox.Position = UDim2.new(0.721, 0, 1.033, 0)
+AmountTextBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AmountTextBox.PlaceholderText = "Type the amount here..."
+AmountTextBox.PlaceholderColor3 = Color3.new(1, 1, 1)
+AmountTextBox.Font = Enum.Font.SourceSansBold
+AmountTextBox.TextColor3 = Color3.new(1, 1, 1)
+AmountTextBox.TextScaled = true
+AmountTextBox.Visible = false
+
+local UIStrokeAmount = Instance.new("UIStroke", AmountTextBox)
+UIStrokeAmount.Thickness = 2
+UIStrokeAmount.ApplyStrokeMode = "Border"
+UIStrokeAmount.Color = Color3.new(1, 1, 1)
+
+local UIDragDetector = Instance.new("UIDragDetector", Main)
+
+local Open = Instance.new("TextButton", gui)
+Open.Name = "Open"
+Open.Size = UDim2.new(0, 124, 0, 32)
+Open.Position = UDim2.new(0, 0, 0.942, 0)
+Open.TextScaled = true
+Open.Text = "Open"
+Open.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Open.Font = Enum.Font.SourceSansBold
+Open.TextColor3 = Color3.new(1, 1, 1)
+Open.Visible = false
+
+local UIStrokeOpen = Instance.new("UIStroke", Open)
+UIStrokeOpen.ApplyStrokeMode = "Border"
+UIStrokeOpen.Color = Color3.new(1, 1, 1)
+
+-- =====================
+-- MINIMIZE / OPEN
+-- =====================
+
+Minimize.MouseButton1Click:Connect(function()
+	Main.Visible = false
+	Open.Visible = true
+end)
+
+Open.MouseButton1Click:Connect(function()
+	Main.Visible = true
+	Open.Visible = false
+end)
+
+-- =====================
+-- MOUSE UNLOCK LOGIC
+-- =====================
+
+local mouseUnlocked = false
+local mouseUnlockConnection = nil
+
+local function stopMouseUnlock()
+	mouseUnlocked = false
+	MouseUnlock.Text = "MouseUnlock"
+	if mouseUnlockConnection then
+		mouseUnlockConnection:Disconnect()
+		mouseUnlockConnection = nil
+	end
+end
+
+local function startMouseUnlock()
+	mouseUnlocked = true
+	MouseUnlock.Text = "MouseUnlock [ON]"
+	mouseUnlockConnection = RunService.RenderStepped:Connect(function()
+		UIS.MouseBehavior = Enum.MouseBehavior.Default
+	end)
+end
+
+MouseUnlock.MouseButton1Click:Connect(function()
+	if mouseUnlocked then
+		stopMouseUnlock()
+	else
+		startMouseUnlock()
+	end
+end)
+
+-- =====================
+-- AIMLOCK LOGIC
+-- =====================
+
+local aimLocking = false
+local aimlockTarget = nil
+local aimlockConnection = nil
+local highlight = nil
+
+local function removeHighlight()
+	if highlight then
+		highlight:Destroy()
+		highlight = nil
+	end
+end
+
+local function stopAimlock()
+	aimLocking = false
+	if aimlockConnection then
+		aimlockConnection:Disconnect()
+		aimlockConnection = nil
+	end
+	removeHighlight()
+	aimlockTarget = nil
+end
+
+local function startAimlock(targetPlayer)
+	if aimLocking and aimlockTarget == targetPlayer then
+		stopAimlock()
+		return
+	end
+
+	stopAimlock()
+
+	local char = targetPlayer.Character
+	if not char then return end
+
+	aimLocking = true
+	aimlockTarget = targetPlayer
+
+	highlight = Instance.new("Highlight")
+	highlight.FillColor = Color3.fromRGB(255, 0, 0)
+	highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+	highlight.FillTransparency = 0.5
+	highlight.Parent = char
+
+	aimlockConnection = RunService.RenderStepped:Connect(function()
+		local tChar = aimlockTarget and aimlockTarget.Character
+		if not tChar or not tChar:FindFirstChild("HumanoidRootPart") then
+			stopAimlock()
+			return
+		end
+		local cam = workspace.CurrentCamera
+		cam.CFrame = CFrame.new(cam.CFrame.Position, tChar.HumanoidRootPart.Position)
+	end)
+end
+
+Players.PlayerRemoving:Connect(function(plr)
+	if aimlockTarget == plr then stopAimlock() end
+end)
+
+-- =====================
+-- FLY LOGIC
+-- =====================
+
+local flying = false
+local flyBV = nil
+local flyBG = nil
+local flyConnection = nil
+
+local function stopFly()
+	flying = false
+	if flyBV then flyBV:Destroy(); flyBV = nil end
+	if flyBG then flyBG:Destroy(); flyBG = nil end
+	if flyConnection then flyConnection:Disconnect(); flyConnection = nil end
+	Fly.Text = "Fly"
+end
+
+local function startFly()
+	local speed = tonumber(AmountTextBox.Text) or 70
+	local char = player.Character or player.CharacterAdded:Wait()
+	local root = char:WaitForChild("HumanoidRootPart")
+
+	flying = true
+	Fly.Text = "Fly [ON]"
+
+	flyBV = Instance.new("BodyVelocity")
+	flyBV.MaxForce = Vector3.new(1, 1, 1) * 100000
+	flyBV.Parent = root
+
+	flyBG = Instance.new("BodyGyro")
+	flyBG.MaxTorque = Vector3.new(1, 1, 1) * 100000
+	flyBG.CFrame = root.CFrame
+	flyBG.Parent = root
+
+	flyConnection = RunService.RenderStepped:Connect(function()
+		if flying and root and root.Parent then
+			local cam = workspace.CurrentCamera
+			local currentSpeed = tonumber(AmountTextBox.Text) or speed
+			flyBV.Velocity = cam.CFrame.LookVector * currentSpeed
+			flyBG.CFrame = cam.CFrame
+		end
+	end)
+end
+
+UIS.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.E and Currentselected.Text == "Current Selected: Fly" then
+		if flying then stopFly() else startFly() end
+	end
+end)
+
+player.CharacterAdded:Connect(function()
+	if flying then stopFly() end
+end)
+
+-- =====================
+-- TPWALK LOGIC
+-- =====================
+
+local tpwalking = false
+
+local function stopTpWalk()
+	tpwalking = false
+	TpWalk.Text = "TpWalk"
+end
+
+local function startTpWalk()
+	local speed = tonumber(AmountTextBox.Text) or 4
+	tpwalking = true
+	TpWalk.Text = "TpWalk [ON]"
+
+	local char = player.Character
+	local hum = char and char:FindFirstChildWhichIsA("Humanoid")
+	if not hum then stopTpWalk() return end
+
+	task.spawn(function()
+		while tpwalking and char and hum and hum.Parent do
+			local delta = RunService.Heartbeat:Wait()
+			if hum.MoveDirection.Magnitude > 0 then
+				local currentSpeed = tonumber(AmountTextBox.Text) or speed
+				pcall(function()
+					char:TranslateBy(hum.MoveDirection * currentSpeed * delta * 10)
+				end)
+			end
+			if not player.Character or player.Character ~= char then
+				stopTpWalk()
+			end
+		end
+	end)
+end
+
+player.CharacterAdded:Connect(function()
+	if tpwalking then stopTpWalk() end
+end)
+
+-- =====================
+-- PLAYER LIST
+-- =====================
+
+local playerButtons = {}
+
+local function updateCanvas()
+	ScrollingList.CanvasSize = UDim2.new(0, 0, 0, UIListLayout.AbsoluteContentSize.Y)
+end
+
+local function createPlayerButton(targetPlayer)
+	if targetPlayer == player then return end
+
+	local btn = TemplatePlayer:Clone()
+	btn.Text = targetPlayer.Name
+	btn.Visible = true
+	btn.Parent = ScrollingList
+
+	btn.MouseButton1Click:Connect(function()
+		CurrentSelectedPlayer.Text = "Current Selected Player: " .. targetPlayer.Name
+
+		local feature = Currentselected.Text
+
+		if feature == "Current Selected: TP" then
+			local char = player.Character
+			local targetChar = targetPlayer.Character
+			if char and targetChar then
+				local root = char:FindFirstChild("HumanoidRootPart")
+				local targetRoot = targetChar:FindFirstChild("HumanoidRootPart")
+				if root and targetRoot then
+					root.CFrame = targetRoot.CFrame + Vector3.new(2, 0, 0)
+				end
+			end
+
+		elseif feature == "Current Selected: Aimlock" then
+			startAimlock(targetPlayer)
+		end
+	end)
+
+	playerButtons[targetPlayer] = btn
+	updateCanvas()
+end
+
+for _, plr in pairs(Players:GetPlayers()) do
+	createPlayerButton(plr)
+end
+
+Players.PlayerAdded:Connect(createPlayerButton)
+
+Players.PlayerRemoving:Connect(function(plr)
+	if playerButtons[plr] then
+		playerButtons[plr]:Destroy()
+		playerButtons[plr] = nil
+		updateCanvas()
+	end
+end)
+
+UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvas)
+
+-- =====================
+-- FEATURE SELECTION
+-- =====================
+
+local currentFeature = nil
+
+local function selectFeature(featureName, showPlayerList, showAmount)
+	if currentFeature == featureName then
+		currentFeature = nil
+		Currentselected.Text = "Current Selected: None"
+		PlayerList.Visible = false
+		AmountTextBox.Visible = false
+		CurrentSelectedPlayer.Text = "Current Selected Player: None"
+		if featureName == "Aimlock" then stopAimlock() end
+		if featureName == "Fly" then stopFly() end
+		if featureName == "TpWalk" then stopTpWalk() end
+		return
+	end
+
+	if currentFeature == "Aimlock" then stopAimlock() end
+	if currentFeature == "Fly" then stopFly() end
+	if currentFeature == "TpWalk" then stopTpWalk() end
+
+	currentFeature = featureName
+	Currentselected.Text = "Current Selected: " .. featureName
+	PlayerList.Visible = showPlayerList
+	AmountTextBox.Visible = showAmount
+
+	if not showPlayerList then
+		CurrentSelectedPlayer.Text = "Current Selected Player: None"
+	end
+end
+
+Tp.MouseButton1Click:Connect(function()
+	selectFeature("TP", true, false)
+end)
+
+Aimlock.MouseButton1Click:Connect(function()
+	selectFeature("Aimlock", true, false)
+end)
+
+Fly.MouseButton1Click:Connect(function()
+	selectFeature("Fly", false, true)
+	if currentFeature == "Fly" then
+		if flying then stopFly() else startFly() end
+	end
+end)
+
+TpWalk.MouseButton1Click:Connect(function()
+	selectFeature("TpWalk", false, true)
+	if currentFeature == "TpWalk" then
+		if tpwalking then stopTpWalk() else startTpWalk() end
+	end
+end)
