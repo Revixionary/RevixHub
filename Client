@@ -6,10 +6,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 local playergui = player:WaitForChild("PlayerGui")
 
--- =====================
--- GUI SETUP
--- =====================
-
 local gui = Instance.new("ScreenGui", playergui)
 gui.Name = "Hub"
 gui.ResetOnSpawn = false
@@ -63,7 +59,6 @@ Container.BackgroundColor3 = Color3.new(1, 1, 1)
 local UIStrokeContainer = Instance.new("UIStroke", Container)
 UIStrokeContainer.Thickness = 2
 
--- TP Button
 local Tp = Instance.new("TextButton", Container)
 Tp.Name = "Tp"
 Tp.Size = UDim2.new(0, 152, 0, 31)
@@ -77,7 +72,6 @@ local UIStrokeTp = Instance.new("UIStroke", Tp)
 UIStrokeTp.Color = Color3.new(1, 1, 1)
 UIStrokeTp.ApplyStrokeMode = "Border"
 
--- Aimlock Button
 local Aimlock = Tp:Clone()
 Aimlock.Name = "Aimlock"
 Aimlock.Text = "Aimlock"
@@ -89,19 +83,16 @@ Fly.Name = "Fly"
 Fly.Text = "Fly"
 Fly.Parent = Container
 
--- TpWalk Button
 local TpWalk = Tp:Clone()
 TpWalk.Name = "TpWalk"
 TpWalk.Text = "TpWalk"
 TpWalk.Parent = Container
 
--- MouseUnlock Button
 local MouseUnlock = Tp:Clone()
 MouseUnlock.Name = "MouseUnlock"
 MouseUnlock.Text = "MouseUnlock"
 MouseUnlock.Parent = Container
 
--- Color Button
 local ColorBtn = Tp:Clone()
 ColorBtn.Name = "ColorBtn"
 ColorBtn.Text = "Color"
@@ -199,11 +190,6 @@ local UIStrokeOpen = Instance.new("UIStroke", Open)
 UIStrokeOpen.ApplyStrokeMode = "Border"
 UIStrokeOpen.Color = Color3.new(1, 1, 1)
 
--- =====================
--- COLOR PICKER UI
--- =====================
--- Panel that appears to the right of Main when Color is selected
-
 local ColorPanel = Instance.new("Frame", gui)
 ColorPanel.Name = "ColorPanel"
 ColorPanel.Size = UDim2.new(0, 220, 0, 310)
@@ -215,7 +201,6 @@ local UIStrokeColorPanel = Instance.new("UIStroke", ColorPanel)
 UIStrokeColorPanel.Thickness = 2
 UIStrokeColorPanel.Color = Color3.new(1, 1, 1)
 
--- Hue rainbow bar
 local HueLabel = Instance.new("TextLabel", ColorPanel)
 HueLabel.Size = UDim2.new(0, 200, 0, 16)
 HueLabel.Position = UDim2.new(0, 10, 0, 8)
@@ -233,7 +218,6 @@ HueBar.Position = UDim2.new(0, 10, 0, 26)
 HueBar.BackgroundColor3 = Color3.new(1, 0, 0)
 HueBar.ClipsDescendants = true
 
--- Fill hue bar with rainbow using UIGradient
 local HueGradient = Instance.new("UIGradient", HueBar)
 HueGradient.Color = ColorSequence.new({
 	ColorSequenceKeypoint.new(0,    Color3.fromHSV(0,    1, 1)),
@@ -251,7 +235,6 @@ HueCursor.Position = UDim2.new(0, 0, 0, 0)
 HueCursor.BackgroundColor3 = Color3.new(1, 1, 1)
 HueCursor.BorderSizePixel = 0
 
--- Saturation bar
 local SatLabel = Instance.new("TextLabel", ColorPanel)
 SatLabel.Size = UDim2.new(0, 200, 0, 16)
 SatLabel.Position = UDim2.new(0, 10, 0, 52)
@@ -280,7 +263,6 @@ SatCursor.Position = UDim2.new(1, -4, 0, 0)
 SatCursor.BackgroundColor3 = Color3.new(1, 1, 1)
 SatCursor.BorderSizePixel = 0
 
--- Brightness bar
 local BriLabel = Instance.new("TextLabel", ColorPanel)
 BriLabel.Size = UDim2.new(0, 200, 0, 16)
 BriLabel.Position = UDim2.new(0, 10, 0, 96)
@@ -309,7 +291,6 @@ BriCursor.Position = UDim2.new(1, -4, 0, 0)
 BriCursor.BackgroundColor3 = Color3.new(1, 1, 1)
 BriCursor.BorderSizePixel = 0
 
--- Speed bar
 local SpeedLabel = Instance.new("TextLabel", ColorPanel)
 SpeedLabel.Size = UDim2.new(0, 200, 0, 16)
 SpeedLabel.Position = UDim2.new(0, 10, 0, 140)
@@ -328,7 +309,7 @@ SpeedBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 SpeedBar.ClipsDescendants = true
 
 local SpeedFill = Instance.new("Frame", SpeedBar)
-SpeedFill.Size = UDim2.new(0.2, 0, 1, 0) -- default speed 4 out of max 20
+SpeedFill.Size = UDim2.new(0.2, 0, 1, 0)
 SpeedFill.BackgroundColor3 = Color3.fromRGB(100, 100, 255)
 SpeedFill.BorderSizePixel = 0
 
@@ -348,7 +329,6 @@ SpeedValueLabel.TextColor3 = Color3.new(1, 1, 1)
 SpeedValueLabel.TextSize = 12
 SpeedValueLabel.TextXAlignment = Enum.TextXAlignment.Left
 
--- RP Name box
 local RPNameLabel = Instance.new("TextLabel", ColorPanel)
 RPNameLabel.Size = UDim2.new(0, 200, 0, 16)
 RPNameLabel.Position = UDim2.new(0, 10, 0, 198)
@@ -375,7 +355,6 @@ local UIStrokeRPName = Instance.new("UIStroke", RPNameBox)
 UIStrokeRPName.Color = Color3.new(1, 1, 1)
 UIStrokeRPName.Thickness = 1
 
--- Preview swatch
 local PreviewLabel = Instance.new("TextLabel", ColorPanel)
 PreviewLabel.Size = UDim2.new(0, 90, 0, 16)
 PreviewLabel.Position = UDim2.new(0, 10, 0, 250)
@@ -395,7 +374,6 @@ local UIStrokePreview = Instance.new("UIStroke", ColorPreview)
 UIStrokePreview.Color = Color3.new(1, 1, 1)
 UIStrokePreview.Thickness = 1
 
--- Start/Stop color button
 local ColorStartBtn = Instance.new("TextButton", ColorPanel)
 ColorStartBtn.Size = UDim2.new(0, 100, 0, 24)
 ColorStartBtn.Position = UDim2.new(0, 110, 0, 268)
@@ -409,10 +387,6 @@ local UIStrokeColorStart = Instance.new("UIStroke", ColorStartBtn)
 UIStrokeColorStart.Color = Color3.new(1, 1, 1)
 UIStrokeColorStart.ApplyStrokeMode = "Border"
 
--- =====================
--- MINIMIZE / OPEN
--- =====================
-
 Minimize.MouseButton1Click:Connect(function()
 	Main.Visible = false
 	Open.Visible = true
@@ -422,10 +396,6 @@ Open.MouseButton1Click:Connect(function()
 	Main.Visible = true
 	Open.Visible = false
 end)
-
--- =====================
--- MOUSE UNLOCK LOGIC
--- =====================
 
 local mouseUnlocked = false
 local mouseUnlockConnection = nil
@@ -450,10 +420,6 @@ end
 MouseUnlock.MouseButton1Click:Connect(function()
 	if mouseUnlocked then stopMouseUnlock() else startMouseUnlock() end
 end)
-
--- =====================
--- AIMLOCK LOGIC
--- =====================
 
 local aimLocking = false
 local aimlockTarget = nil
@@ -494,10 +460,6 @@ end
 Players.PlayerRemoving:Connect(function(plr)
 	if aimlockTarget == plr then stopAimlock() end
 end)
-
--- =====================
--- FLY LOGIC
--- =====================
 
 local flying = false
 local flyBV, flyBG, flyConnection = nil, nil, nil
@@ -544,10 +506,6 @@ player.CharacterAdded:Connect(function()
 	if flying then stopFly() end
 end)
 
--- =====================
--- TPWALK LOGIC
--- =====================
-
 local tpwalking = false
 
 local function stopTpWalk()
@@ -578,11 +536,6 @@ player.CharacterAdded:Connect(function()
 	if tpwalking then stopTpWalk() end
 end)
 
--- =====================
--- COLOR SYSTEM
--- =====================
-
--- HSV state
 local pickedH = 0
 local pickedS = 1
 local pickedV = 1
@@ -625,7 +578,6 @@ local function updateAllGradients()
 	updatePreview()
 end
 
--- Slider drag helper
 local function makeSliderDrag(bar, cursor, onChanged)
 	local draggingSlider = false
 	bar.InputBegan:Connect(function(input)
@@ -650,32 +602,27 @@ local function makeSliderDrag(bar, cursor, onChanged)
 	end)
 end
 
--- Wire up hue slider
 makeSliderDrag(HueBar, HueCursor, function(rel)
 	pickedH = rel
 	updateAllGradients()
 end)
 
--- Wire up saturation slider
 makeSliderDrag(SatBar, SatCursor, function(rel)
 	pickedS = rel
 	updateAllGradients()
 end)
 
--- Wire up brightness slider
 makeSliderDrag(BriBar, BriCursor, function(rel)
 	pickedV = rel
 	updateAllGradients()
 end)
 
--- Wire up speed slider
 makeSliderDrag(SpeedBar, SpeedCursor, function(rel)
 	colorCycleSpeed = math.max(0.1, rel * 20)
 	SpeedFill.Size = UDim2.new(rel, 0, 1, 0)
 	SpeedValueLabel.Text = "Speed: " .. math.floor(colorCycleSpeed * 10) / 10
 end)
 
--- Remotes (pcall wrapped in case they don't exist in this game)
 local ColorRemote, NameRemote, BioColorRemote, isBioFunction
 pcall(function()
 	local Remotes = ReplicatedStorage:WaitForChild("Remotes", 3)
@@ -723,7 +670,6 @@ local function startColor()
 	colorConnection = RunService.Heartbeat:Connect(function(dt)
 		colorTime += dt * colorCycleSpeed
 
-		-- Cycle hue from picked H, keeping S and V from picker
 		local cycledH = (pickedH + colorTime * 0.1) % 1
 		local color = Color3.fromHSV(cycledH, pickedS, pickedV)
 
@@ -748,10 +694,6 @@ end
 ColorStartBtn.MouseButton1Click:Connect(function()
 	if colorRunning then stopColor() else startColor() end
 end)
-
--- =====================
--- PLAYER LIST
--- =====================
 
 local playerButtons = {}
 
@@ -797,14 +739,9 @@ Players.PlayerRemoving:Connect(function(plr)
 end)
 UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvas)
 
--- =====================
--- FEATURE SELECTION
--- =====================
-
 local currentFeature = nil
 
 local function selectFeature(featureName, showPlayerList, showAmount, showColorPanel)
-	-- Toggle off same feature
 	if currentFeature == featureName then
 		currentFeature = nil
 		Currentselected.Text = "Current Selected: None"
