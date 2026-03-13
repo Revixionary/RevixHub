@@ -2,544 +2,222 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local playergui = player:WaitForChild("PlayerGui")
 
-local ACCENT = Color3.fromRGB(120, 80, 255)
-local ACCENT2 = Color3.fromRGB(80, 200, 255)
-local BG_DARK = Color3.fromRGB(10, 10, 14)
-local BG_MID = Color3.fromRGB(16, 16, 22)
-local BG_PANEL = Color3.fromRGB(20, 20, 28)
-local BG_BTN = Color3.fromRGB(26, 26, 36)
-local BG_BTN_HOV = Color3.fromRGB(34, 34, 48)
-local TEXT_PRIMARY = Color3.fromRGB(230, 230, 255)
-local TEXT_MUTED = Color3.fromRGB(110, 110, 140)
-local BORDER = Color3.fromRGB(40, 40, 60)
-local BORDER_ACCENT = Color3.fromRGB(80, 60, 180)
-local GREEN = Color3.fromRGB(60, 220, 120)
-local RED = Color3.fromRGB(220, 60, 80)
-
-local function makeStroke(parent, thickness, color, mode)
-	local s = Instance.new("UIStroke", parent)
-	s.Thickness = thickness or 1
-	s.Color = color or BORDER
-	if mode then s.ApplyStrokeMode = mode end
-	return s
-end
-
-local function makeCorner(parent, radius)
-	local c = Instance.new("UICorner", parent)
-	c.CornerRadius = UDim.new(0, radius or 6)
-	return c
-end
-
-local function makePadding(parent, px)
-	local p = Instance.new("UIPadding", parent)
-	p.PaddingLeft = UDim.new(0, px)
-	p.PaddingRight = UDim.new(0, px)
-	p.PaddingTop = UDim.new(0, px)
-	p.PaddingBottom = UDim.new(0, px)
-	return p
-end
-
-local function tweenBgColor(obj, color, t)
-	TweenService:Create(obj, TweenInfo.new(t or 0.15), {BackgroundColor3 = color}):Play()
-end
-
-local function addHoverEffect(btn, normalColor, hoverColor)
-	btn.MouseEnter:Connect(function() tweenBgColor(btn, hoverColor) end)
-	btn.MouseLeave:Connect(function() tweenBgColor(btn, normalColor) end)
-end
-
 local gui = Instance.new("ScreenGui", playergui)
 gui.Name = "Hub"
 gui.ResetOnSpawn = false
-gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-local Main = Instance.new("Frame", gui)
+local Main = Instance.new("ImageLabel", gui)
 Main.Name = "Main"
-Main.Size = UDim2.new(0, 580, 0, 340)
-Main.Position = UDim2.new(0.5, -290, 0.5, -170)
-Main.BackgroundColor3 = BG_DARK
-Main.ClipsDescendants = false
-makeCorner(Main, 10)
-makeStroke(Main, 1, BORDER_ACCENT)
+Main.Size = UDim2.new(0, 716, 0, 301)
+Main.Position = UDim2.new(0.231, 0, 0.226, 0)
+Main.Image = "rbxassetid://116609435350470"
 
-local TopBar = Instance.new("Frame", Main)
-TopBar.Size = UDim2.new(1, 0, 0, 36)
-TopBar.BackgroundColor3 = BG_MID
-makeCorner(TopBar, 10)
+local UIStroke = Instance.new("UIStroke", Main)
+UIStroke.Thickness = 2
 
-local TopBarBottom = Instance.new("Frame", TopBar)
-TopBarBottom.Size = UDim2.new(1, 0, 0.5, 0)
-TopBarBottom.Position = UDim2.new(0, 0, 0.5, 0)
-TopBarBottom.BackgroundColor3 = BG_MID
-TopBarBottom.BorderSizePixel = 0
+local Minimize = Instance.new("TextButton", Main)
+Minimize.Name = "Minimize"
+Minimize.Size = UDim2.new(0, 72, 0, 23)
+Minimize.Position = UDim2.new(0.899, 0, -0.076, 0)
+Minimize.Font = Enum.Font.SourceSansBold
+Minimize.Text = "-"
+Minimize.TextSize = 40
+Minimize.TextColor3 = Color3.new(1, 1, 1)
+Minimize.BackgroundColor3 = Color3.new(0, 0, 0)
 
-local TopDivider = Instance.new("Frame", Main)
-TopDivider.Size = UDim2.new(1, 0, 0, 1)
-TopDivider.Position = UDim2.new(0, 0, 0, 36)
-TopDivider.BackgroundColor3 = BORDER_ACCENT
-TopDivider.BorderSizePixel = 0
+local UIStrokeMin1 = Instance.new("UIStroke", Minimize)
+UIStrokeMin1.Thickness = 2
 
-local TitleDot = Instance.new("Frame", TopBar)
-TitleDot.Size = UDim2.new(0, 8, 0, 8)
-TitleDot.Position = UDim2.new(0, 14, 0.5, -4)
-TitleDot.BackgroundColor3 = ACCENT
-makeCorner(TitleDot, 4)
+local UIStrokeMin2 = Instance.new("UIStroke", Minimize)
+UIStrokeMin2.Thickness = 2
+UIStrokeMin2.ApplyStrokeMode = "Border"
 
-local TitleLabel = Instance.new("TextLabel", TopBar)
-TitleLabel.Size = UDim2.new(0, 200, 1, 0)
-TitleLabel.Position = UDim2.new(0, 28, 0, 0)
-TitleLabel.BackgroundTransparency = 1
-TitleLabel.Text = "Ragebait Hub"
-TitleLabel.Font = Enum.Font.GothamBold
-TitleLabel.TextSize = 13
-TitleLabel.TextColor3 = TEXT_PRIMARY
-TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+local Title = Instance.new("TextLabel", Main)
+Title.Name = "Title"
+Title.Size = UDim2.new(0, 200, 0, 27)
+Title.Position = UDim2.new(0.36, 0, 1, 0)
+Title.Font = Enum.Font.SourceSansBold
+Title.Text = "Ragebait Hub"
+Title.TextScaled = true
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.BackgroundTransparency = 1
 
-local VersionLabel = Instance.new("TextLabel", TopBar)
-VersionLabel.Size = UDim2.new(0, 60, 1, 0)
-VersionLabel.Position = UDim2.new(0, 228, 0, 0)
-VersionLabel.BackgroundTransparency = 1
-VersionLabel.Text = "v1.0"
-VersionLabel.Font = Enum.Font.Gotham
-VersionLabel.TextSize = 11
-VersionLabel.TextColor3 = TEXT_MUTED
-VersionLabel.TextXAlignment = Enum.TextXAlignment.Left
+local UIStrokeTitle = Instance.new("UIStroke", Title)
+UIStrokeTitle.Thickness = 2
 
-local MinimizeBtn = Instance.new("TextButton", TopBar)
-MinimizeBtn.Size = UDim2.new(0, 26, 0, 26)
-MinimizeBtn.Position = UDim2.new(1, -60, 0.5, -13)
-MinimizeBtn.BackgroundColor3 = BG_BTN
-MinimizeBtn.Text = "–"
-MinimizeBtn.Font = Enum.Font.GothamBold
-MinimizeBtn.TextSize = 14
-MinimizeBtn.TextColor3 = TEXT_MUTED
-makeCorner(MinimizeBtn, 5)
-makeStroke(MinimizeBtn, 1, BORDER)
-addHoverEffect(MinimizeBtn, BG_BTN, BG_BTN_HOV)
+local Container = Instance.new("Frame", Main)
+Container.Name = "Container"
+Container.Size = UDim2.new(0, 691, 0, 279)
+Container.Position = UDim2.new(0.018, 0, 0.037, 0)
+Container.BackgroundTransparency = 0.8
+Container.BackgroundColor3 = Color3.new(1, 1, 1)
 
-local CloseBtn = Instance.new("TextButton", TopBar)
-CloseBtn.Size = UDim2.new(0, 26, 0, 26)
-CloseBtn.Position = UDim2.new(1, -30, 0.5, -13)
-CloseBtn.BackgroundColor3 = BG_BTN
-CloseBtn.Text = "×"
-CloseBtn.Font = Enum.Font.GothamBold
-CloseBtn.TextSize = 16
-CloseBtn.TextColor3 = RED
-makeCorner(CloseBtn, 5)
-makeStroke(CloseBtn, 1, BORDER)
-addHoverEffect(CloseBtn, BG_BTN, Color3.fromRGB(50, 20, 25))
+local UIStrokeContainer = Instance.new("UIStroke", Container)
+UIStrokeContainer.Thickness = 2
 
-local UIDragDetector = Instance.new("UIDragDetector", Main)
+local Tp = Instance.new("TextButton", Container)
+Tp.Name = "Tp"
+Tp.Size = UDim2.new(0, 152, 0, 31)
+Tp.Font = Enum.Font.SourceSansBold
+Tp.Text = "TP"
+Tp.TextScaled = true
+Tp.TextColor3 = Color3.new(1, 1, 1)
+Tp.BackgroundColor3 = Color3.new(0, 0, 0)
 
-local LeftPanel = Instance.new("Frame", Main)
-LeftPanel.Size = UDim2.new(0, 150, 1, -37)
-LeftPanel.Position = UDim2.new(0, 0, 0, 37)
-LeftPanel.BackgroundColor3 = BG_MID
-LeftPanel.BorderSizePixel = 0
+local UIStrokeTp = Instance.new("UIStroke", Tp)
+UIStrokeTp.Color = Color3.new(1, 1, 1)
+UIStrokeTp.ApplyStrokeMode = "Border"
 
-local LeftDivider = Instance.new("Frame", Main)
-LeftDivider.Size = UDim2.new(0, 1, 1, -37)
-LeftDivider.Position = UDim2.new(0, 150, 0, 37)
-LeftDivider.BackgroundColor3 = BORDER
-LeftDivider.BorderSizePixel = 0
+local Aimlock = Tp:Clone()
+Aimlock.Name = "Aimlock"
+Aimlock.Text = "Aimlock"
+Aimlock.Parent = Container
 
-local LeftCornerFix = Instance.new("Frame", LeftPanel)
-LeftCornerFix.Size = UDim2.new(1, 0, 0, 10)
-LeftCornerFix.Position = UDim2.new(0, 0, 1, -10)
-LeftCornerFix.BackgroundColor3 = BG_MID
-LeftCornerFix.BorderSizePixel = 0
+-- Fly Button
+local Fly = Tp:Clone()
+Fly.Name = "Fly"
+Fly.Text = "Fly"
+Fly.Parent = Container
 
-local ButtonList = Instance.new("Frame", LeftPanel)
-ButtonList.Size = UDim2.new(1, 0, 1, 0)
-ButtonList.BackgroundTransparency = 1
+local TpWalk = Tp:Clone()
+TpWalk.Name = "TpWalk"
+TpWalk.Text = "TpWalk"
+TpWalk.Parent = Container
 
-local ButtonListLayout = Instance.new("UIListLayout", ButtonList)
-ButtonListLayout.Padding = UDim.new(0, 2)
-ButtonListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-makePadding(ButtonList, 8)
+local MouseUnlock = Tp:Clone()
+MouseUnlock.Name = "MouseUnlock"
+MouseUnlock.Text = "MouseUnlock"
+MouseUnlock.Parent = Container
 
-local function makeNavButton(text, icon)
-	local btn = Instance.new("TextButton", ButtonList)
-	btn.Size = UDim2.new(1, 0, 0, 32)
-	btn.BackgroundColor3 = BG_MID
-	btn.BorderSizePixel = 0
-	makeCorner(btn, 5)
+local ColorBtn = Tp:Clone()
+ColorBtn.Name = "ColorBtn"
+ColorBtn.Text = "Color"
+ColorBtn.Parent = Container
 
-	local iconLabel = Instance.new("TextLabel", btn)
-	iconLabel.Size = UDim2.new(0, 20, 1, 0)
-	iconLabel.Position = UDim2.new(0, 8, 0, 0)
-	iconLabel.BackgroundTransparency = 1
-	iconLabel.Text = icon or "›"
-	iconLabel.Font = Enum.Font.GothamBold
-	iconLabel.TextSize = 13
-	iconLabel.TextColor3 = TEXT_MUTED
-	iconLabel.TextXAlignment = Enum.TextXAlignment.Center
+local UIGridLayout = Instance.new("UIGridLayout", Container)
+UIGridLayout.CellSize = UDim2.new(0, 150, 0, 30)
+UIGridLayout.CellPadding = UDim2.new(0, 30, 0, 30)
 
-	local textLabel = Instance.new("TextLabel", btn)
-	textLabel.Size = UDim2.new(1, -32, 1, 0)
-	textLabel.Position = UDim2.new(0, 30, 0, 0)
-	textLabel.BackgroundTransparency = 1
-	textLabel.Text = text
-	textLabel.Font = Enum.Font.Gotham
-	textLabel.TextSize = 12
-	textLabel.TextColor3 = TEXT_MUTED
-	textLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-	local activeBar = Instance.new("Frame", btn)
-	activeBar.Size = UDim2.new(0, 3, 0.6, 0)
-	activeBar.Position = UDim2.new(0, 0, 0.2, 0)
-	activeBar.BackgroundColor3 = ACCENT
-	makeCorner(activeBar, 2)
-	activeBar.Visible = false
-
-	btn.MouseEnter:Connect(function()
-		if textLabel.TextColor3 ~= TEXT_PRIMARY then
-			tweenBgColor(btn, BG_BTN_HOV)
-		end
-	end)
-	btn.MouseLeave:Connect(function()
-		if textLabel.TextColor3 ~= TEXT_PRIMARY then
-			tweenBgColor(btn, BG_MID)
-		end
-	end)
-
-	return btn, textLabel, iconLabel, activeBar
-end
-
-local ContentArea = Instance.new("Frame", Main)
-ContentArea.Size = UDim2.new(1, -150, 1, -37)
-ContentArea.Position = UDim2.new(0, 150, 0, 37)
-ContentArea.BackgroundTransparency = 1
-ContentArea.ClipsDescendants = true
-
-local function makeContentPage()
-	local page = Instance.new("Frame", ContentArea)
-	page.Size = UDim2.new(1, 0, 1, 0)
-	page.BackgroundTransparency = 1
-	page.Visible = false
-	return page
-end
-
-local function makeLabel(parent, text, size, pos, bold)
-	local lbl = Instance.new("TextLabel", parent)
-	lbl.Size = size
-	lbl.Position = pos
-	lbl.BackgroundTransparency = 1
-	lbl.Text = text
-	lbl.Font = bold and Enum.Font.GothamBold or Enum.Font.Gotham
-	lbl.TextSize = 11
-	lbl.TextColor3 = TEXT_MUTED
-	lbl.TextXAlignment = Enum.TextXAlignment.Left
-	return lbl
-end
-
-local function makeSectionHeader(parent, text, yPos)
-	local lbl = Instance.new("TextLabel", parent)
-	lbl.Size = UDim2.new(1, -20, 0, 20)
-	lbl.Position = UDim2.new(0, 10, 0, yPos)
-	lbl.BackgroundTransparency = 1
-	lbl.Text = text
-	lbl.Font = Enum.Font.GothamBold
-	lbl.TextSize = 10
-	lbl.TextColor3 = ACCENT
-	lbl.TextXAlignment = Enum.TextXAlignment.Left
-
-	local line = Instance.new("Frame", parent)
-	line.Size = UDim2.new(1, -20, 0, 1)
-	line.Position = UDim2.new(0, 10, 0, yPos + 18)
-	line.BackgroundColor3 = BORDER
-	line.BorderSizePixel = 0
-	return lbl
-end
-
-local function makeFeatureButton(parent, text, yPos)
-	local btn = Instance.new("TextButton", parent)
-	btn.Size = UDim2.new(1, -20, 0, 30)
-	btn.Position = UDim2.new(0, 10, 0, yPos)
-	btn.BackgroundColor3 = BG_BTN
-	btn.Font = Enum.Font.Gotham
-	btn.TextSize = 12
-	btn.Text = text
-	btn.TextColor3 = TEXT_PRIMARY
-	btn.TextXAlignment = Enum.TextXAlignment.Left
-	makeCorner(btn, 5)
-	makeStroke(btn, 1, BORDER)
-
-	local pad = Instance.new("UIPadding", btn)
-	pad.PaddingLeft = UDim.new(0, 10)
-
-	local statusDot = Instance.new("Frame", btn)
-	statusDot.Size = UDim2.new(0, 6, 0, 6)
-	statusDot.Position = UDim2.new(1, -16, 0.5, -3)
-	statusDot.BackgroundColor3 = TEXT_MUTED
-	makeCorner(statusDot, 3)
-
-	addHoverEffect(btn, BG_BTN, BG_BTN_HOV)
-	return btn, statusDot
-end
-
-local function makeTextBox(parent, placeholder, yPos, width)
-	local box = Instance.new("TextBox", parent)
-	box.Size = UDim2.new(0, width or 160, 0, 26)
-	box.Position = UDim2.new(0, 10, 0, yPos)
-	box.BackgroundColor3 = BG_BTN
-	box.Font = Enum.Font.Gotham
-	box.TextSize = 12
-	box.PlaceholderText = placeholder
-	box.PlaceholderColor3 = TEXT_MUTED
-	box.TextColor3 = TEXT_PRIMARY
-	box.ClearTextOnFocus = false
-	makeCorner(box, 5)
-	makeStroke(box, 1, BORDER)
-	local pad = Instance.new("UIPadding", box)
-	pad.PaddingLeft = UDim.new(0, 8)
-	return box
-end
-
-local StatusBar = Instance.new("Frame", Main)
-StatusBar.Size = UDim2.new(1, 0, 0, 22)
-StatusBar.Position = UDim2.new(0, 0, 1, -22)
-StatusBar.BackgroundColor3 = BG_MID
-StatusBar.BorderSizePixel = 0
-makeCorner(StatusBar, 10)
-
-local StatusBarTop = Instance.new("Frame", StatusBar)
-StatusBarTop.Size = UDim2.new(1, 0, 0.6, 0)
-StatusBarTop.BackgroundColor3 = BG_MID
-StatusBarTop.BorderSizePixel = 0
-
-local StatusDivider = Instance.new("Frame", Main)
-StatusDivider.Size = UDim2.new(1, 0, 0, 1)
-StatusDivider.Position = UDim2.new(0, 0, 1, -23)
-StatusDivider.BackgroundColor3 = BORDER
-StatusDivider.BorderSizePixel = 0
-
-local StatusText = Instance.new("TextLabel", StatusBar)
-StatusText.Size = UDim2.new(1, -10, 1, 0)
-StatusText.Position = UDim2.new(0, 10, 0, 0)
-StatusText.BackgroundTransparency = 1
-StatusText.Text = "› Ready"
-StatusText.Font = Enum.Font.Gotham
-StatusText.TextSize = 10
-StatusText.TextColor3 = TEXT_MUTED
-StatusText.TextXAlignment = Enum.TextXAlignment.Left
-
-local function setStatus(text, color)
-	StatusText.Text = "› " .. text
-	StatusText.TextColor3 = color or TEXT_MUTED
-end
-
-local Open = Instance.new("TextButton", gui)
-Open.Name = "Open"
-Open.Size = UDim2.new(0, 110, 0, 28)
-Open.Position = UDim2.new(0, 10, 1, -38)
-Open.BackgroundColor3 = BG_PANEL
-Open.Font = Enum.Font.GothamBold
-Open.Text = "Ragebait Hub"
-Open.TextSize = 11
-Open.TextColor3 = TEXT_PRIMARY
-Open.Visible = false
-makeCorner(Open, 6)
-makeStroke(Open, 1, BORDER_ACCENT)
-addHoverEffect(Open, BG_PANEL, BG_BTN_HOV)
-
-local AmountTextBox = Instance.new("TextBox", gui)
-AmountTextBox.Name = "Amount"
-AmountTextBox.Size = UDim2.new(0, 160, 0, 26)
-AmountTextBox.BackgroundColor3 = BG_BTN
-AmountTextBox.PlaceholderText = "Enter amount..."
-AmountTextBox.PlaceholderColor3 = TEXT_MUTED
-AmountTextBox.Font = Enum.Font.Gotham
-AmountTextBox.TextColor3 = TEXT_PRIMARY
-AmountTextBox.TextSize = 12
-AmountTextBox.Visible = false
-AmountTextBox.Position = UDim2.new(0, 10, 0, 10)
-makeCorner(AmountTextBox, 5)
-makeStroke(AmountTextBox, 1, BORDER)
-local amtPad = Instance.new("UIPadding", AmountTextBox)
-amtPad.PaddingLeft = UDim.new(0, 8)
-
-local PlayerList = Instance.new("Frame", gui)
-PlayerList.Size = UDim2.new(0, 160, 0, 280)
-PlayerList.BackgroundColor3 = BG_PANEL
+local PlayerList = Instance.new("Frame", Main)
+PlayerList.Name = "PlayerList"
+PlayerList.Size = UDim2.new(0, 181, 0, 301)
+PlayerList.Position = UDim2.new(-0.285, 0, 0, 0)
+PlayerList.BackgroundTransparency = 0.4
+PlayerList.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 PlayerList.Visible = false
-makeCorner(PlayerList, 8)
-makeStroke(PlayerList, 1, BORDER_ACCENT)
 
-local PLHeader = Instance.new("TextLabel", PlayerList)
-PLHeader.Size = UDim2.new(1, 0, 0, 28)
-PLHeader.BackgroundColor3 = BG_MID
-PLHeader.Text = "Players"
-PLHeader.Font = Enum.Font.GothamBold
-PLHeader.TextSize = 11
-PLHeader.TextColor3 = TEXT_PRIMARY
-PLHeader.BorderSizePixel = 0
-makeCorner(PLHeader, 8)
-
-local PLHeaderBottom = Instance.new("Frame", PLHeader)
-PLHeaderBottom.Size = UDim2.new(1, 0, 0.5, 0)
-PLHeaderBottom.Position = UDim2.new(0, 0, 0.5, 0)
-PLHeaderBottom.BackgroundColor3 = BG_MID
-PLHeaderBottom.BorderSizePixel = 0
-
-local PLDivider = Instance.new("Frame", PlayerList)
-PLDivider.Size = UDim2.new(1, 0, 0, 1)
-PLDivider.Position = UDim2.new(0, 0, 0, 28)
-PLDivider.BackgroundColor3 = BORDER
-PLDivider.BorderSizePixel = 0
-
-local CurrentSelectedPlayer = Instance.new("TextLabel", PlayerList)
-CurrentSelectedPlayer.Size = UDim2.new(1, -10, 0, 20)
-CurrentSelectedPlayer.Position = UDim2.new(0, 5, 0, 32)
-CurrentSelectedPlayer.BackgroundTransparency = 1
-CurrentSelectedPlayer.Text = "None selected"
-CurrentSelectedPlayer.Font = Enum.Font.Gotham
-CurrentSelectedPlayer.TextSize = 10
-CurrentSelectedPlayer.TextColor3 = TEXT_MUTED
-CurrentSelectedPlayer.TextXAlignment = Enum.TextXAlignment.Left
-CurrentSelectedPlayer.TextTruncate = Enum.TextTruncate.AtEnd
+local UIStrokePlayerList = Instance.new("UIStroke", PlayerList)
+UIStrokePlayerList.Thickness = 2
 
 local ScrollingList = Instance.new("ScrollingFrame", PlayerList)
-ScrollingList.Size = UDim2.new(1, -8, 1, -58)
-ScrollingList.Position = UDim2.new(0, 4, 0, 56)
+ScrollingList.Name = "List"
+ScrollingList.Size = UDim2.new(0, 181, 0, 301)
+ScrollingList.Position = UDim2.new(0, 0, 0, 0)
 ScrollingList.BackgroundTransparency = 1
-ScrollingList.ScrollBarThickness = 3
-ScrollingList.ScrollBarImageColor3 = ACCENT
-ScrollingList.BorderSizePixel = 0
+ScrollingList.ScrollBarThickness = 5
 
 local UIListLayout = Instance.new("UIListLayout", ScrollingList)
 UIListLayout.Padding = UDim.new(0, 3)
 
 local TemplatePlayer = Instance.new("TextButton", ScrollingList)
-TemplatePlayer.Size = UDim2.new(1, 0, 0, 26)
-TemplatePlayer.Font = Enum.Font.Gotham
-TemplatePlayer.TextSize = 11
+TemplatePlayer.Name = "Template"
+TemplatePlayer.Size = UDim2.new(0, 181, 0, 30)
+TemplatePlayer.Font = Enum.Font.SourceSansBold
 TemplatePlayer.Text = ""
-TemplatePlayer.TextColor3 = TEXT_PRIMARY
-TemplatePlayer.BackgroundColor3 = BG_BTN
+TemplatePlayer.TextScaled = true
+TemplatePlayer.TextColor3 = Color3.new(1, 1, 1)
+TemplatePlayer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 TemplatePlayer.Visible = false
-TemplatePlayer.TextXAlignment = Enum.TextXAlignment.Left
-makeCorner(TemplatePlayer, 4)
-local tpPad = Instance.new("UIPadding", TemplatePlayer)
-tpPad.PaddingLeft = UDim.new(0, 8)
 
-local Currentselected = Instance.new("TextLabel", gui)
-Currentselected.Size = UDim2.new(0, 200, 0, 16)
-Currentselected.BackgroundTransparency = 1
-Currentselected.Text = "None"
-Currentselected.Font = Enum.Font.Gotham
-Currentselected.TextSize = 10
-Currentselected.TextColor3 = TEXT_MUTED
-Currentselected.Visible = false
+local UIStrokeTemplate = Instance.new("UIStroke", TemplatePlayer)
+UIStrokeTemplate.Thickness = 2
+UIStrokeTemplate.ApplyStrokeMode = "Border"
+UIStrokeTemplate.Color = Color3.new(1, 1, 1)
 
-local function positionSidePanels()
-	local mainPos = Main.AbsolutePosition
-	local mainSize = Main.AbsoluteSize
-	PlayerList.Position = UDim2.new(0, mainPos.X + mainSize.X + 8, 0, mainPos.Y)
-	AmountTextBox.Position = UDim2.new(0, mainPos.X + mainSize.X + 8, 0, mainPos.Y)
-end
+local Version = Title:Clone()
+Version.Text = "V.1"
+Version.Font = Enum.Font.SourceSansItalic
+Version.Position = UDim2.new(0.363, 0, 1.076, 0)
+Version.Parent = Main
 
-RunService.RenderStepped:Connect(positionSidePanels)
+local Currentselected = Title:Clone()
+Currentselected.Text = "Current Selected: None"
+Currentselected.Parent = Main
+Currentselected.Name = "CurrentSelected"
+Currentselected.Position = UDim2.new(-0.299, 0, -0.246, 0)
+
+local CurrentSelectedPlayer = Currentselected:Clone()
+CurrentSelectedPlayer.Text = "Current Selected Player: None"
+CurrentSelectedPlayer.Parent = Main
+CurrentSelectedPlayer.Name = "CurrentSelectedPlayer"
+CurrentSelectedPlayer.Position = UDim2.new(-0.299, 0, -0.133, 0)
+
+local AmountTextBox = Instance.new("TextBox", Main)
+AmountTextBox.Name = "Amount"
+AmountTextBox.Size = UDim2.new(0, 200, 0, 23)
+AmountTextBox.Position = UDim2.new(0.721, 0, 1.033, 0)
+AmountTextBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AmountTextBox.PlaceholderText = "Type the amount here..."
+AmountTextBox.PlaceholderColor3 = Color3.new(1, 1, 1)
+AmountTextBox.Font = Enum.Font.SourceSansBold
+AmountTextBox.TextColor3 = Color3.new(1, 1, 1)
+AmountTextBox.TextScaled = true
+AmountTextBox.Visible = false
+
+local UIStrokeAmount = Instance.new("UIStroke", AmountTextBox)
+UIStrokeAmount.Thickness = 2
+UIStrokeAmount.ApplyStrokeMode = "Border"
+UIStrokeAmount.Color = Color3.new(1, 1, 1)
+
+local UIDragDetector = Instance.new("UIDragDetector", Main)
+
+local Open = Instance.new("TextButton", gui)
+Open.Name = "Open"
+Open.Size = UDim2.new(0, 124, 0, 32)
+Open.Position = UDim2.new(0, 0, 0.942, 0)
+Open.TextScaled = true
+Open.Text = "Open"
+Open.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Open.Font = Enum.Font.SourceSansBold
+Open.TextColor3 = Color3.new(1, 1, 1)
+Open.Visible = false
+
+local UIStrokeOpen = Instance.new("UIStroke", Open)
+UIStrokeOpen.ApplyStrokeMode = "Border"
+UIStrokeOpen.Color = Color3.new(1, 1, 1)
 
 local ColorPanel = Instance.new("Frame", gui)
 ColorPanel.Name = "ColorPanel"
-ColorPanel.Size = UDim2.new(0, 280, 0, 460)
-ColorPanel.BackgroundColor3 = BG_PANEL
+ColorPanel.Size = UDim2.new(0, 220, 0, 310)
+ColorPanel.Position = UDim2.new(0.231, 726, 0.226, 0) -- sits right of Main
+ColorPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 ColorPanel.Visible = false
-makeCorner(ColorPanel, 8)
-makeStroke(ColorPanel, 1, BORDER_ACCENT)
 
-RunService.RenderStepped:Connect(function()
-	local mainPos = Main.AbsolutePosition
-	local mainSize = Main.AbsoluteSize
-	ColorPanel.Position = UDim2.new(0, mainPos.X + mainSize.X + 8, 0, mainPos.Y)
-end)
+local UIStrokeColorPanel = Instance.new("UIStroke", ColorPanel)
+UIStrokeColorPanel.Thickness = 2
+UIStrokeColorPanel.Color = Color3.new(1, 1, 1)
 
-local CPHeader = Instance.new("TextLabel", ColorPanel)
-CPHeader.Size = UDim2.new(1, 0, 0, 28)
-CPHeader.BackgroundColor3 = BG_MID
-CPHeader.Text = "  Color System"
-CPHeader.Font = Enum.Font.GothamBold
-CPHeader.TextSize = 11
-CPHeader.TextColor3 = TEXT_PRIMARY
-CPHeader.TextXAlignment = Enum.TextXAlignment.Left
-CPHeader.BorderSizePixel = 0
-makeCorner(CPHeader, 8)
+local HueLabel = Instance.new("TextLabel", ColorPanel)
+HueLabel.Size = UDim2.new(0, 200, 0, 16)
+HueLabel.Position = UDim2.new(0, 10, 0, 8)
+HueLabel.BackgroundTransparency = 1
+HueLabel.Text = "Hue"
+HueLabel.Font = Enum.Font.SourceSansBold
+HueLabel.TextColor3 = Color3.new(1, 1, 1)
+HueLabel.TextSize = 13
+HueLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-local CPHeaderBottom = Instance.new("Frame", CPHeader)
-CPHeaderBottom.Size = UDim2.new(1, 0, 0.5, 0)
-CPHeaderBottom.Position = UDim2.new(0, 0, 0.5, 0)
-CPHeaderBottom.BackgroundColor3 = BG_MID
-CPHeaderBottom.BorderSizePixel = 0
-
-local CPDivider = Instance.new("Frame", ColorPanel)
-CPDivider.Size = UDim2.new(1, 0, 0, 1)
-CPDivider.Position = UDim2.new(0, 0, 0, 28)
-CPDivider.BackgroundColor3 = BORDER
-CPDivider.BorderSizePixel = 0
-
-local function cpLabel(text, yPos)
-	local lbl = Instance.new("TextLabel", ColorPanel)
-	lbl.Size = UDim2.new(1, -20, 0, 14)
-	lbl.Position = UDim2.new(0, 10, 0, yPos)
-	lbl.BackgroundTransparency = 1
-	lbl.Text = text
-	lbl.Font = Enum.Font.GothamBold
-	lbl.TextSize = 10
-	lbl.TextColor3 = ACCENT
-	lbl.TextXAlignment = Enum.TextXAlignment.Left
-	return lbl
-end
-
-local function cpSliderBar(yPos)
-	local bar = Instance.new("Frame", ColorPanel)
-	bar.Size = UDim2.new(1, -20, 0, 14)
-	bar.Position = UDim2.new(0, 10, 0, yPos)
-	bar.BackgroundColor3 = BG_BTN
-	bar.ClipsDescendants = true
-	makeCorner(bar, 4)
-	makeStroke(bar, 1, BORDER)
-	local cursor = Instance.new("Frame", bar)
-	cursor.Size = UDim2.new(0, 3, 1, 0)
-	cursor.BackgroundColor3 = Color3.new(1, 1, 1)
-	cursor.BorderSizePixel = 0
-	makeCorner(cursor, 2)
-	return bar, cursor
-end
-
-local function makeSliderDrag(bar, cursor, onChanged)
-	local dragging = false
-	bar.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = true
-			local rel = math.clamp((UIS:GetMouseLocation().X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
-			cursor.Position = UDim2.new(rel, -2, 0, 0)
-			onChanged(rel)
-		end
-	end)
-	UIS.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then dragging = false end
-	end)
-	UIS.InputChanged:Connect(function(input)
-		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-			local rel = math.clamp((UIS:GetMouseLocation().X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
-			cursor.Position = UDim2.new(rel, -2, 0, 0)
-			onChanged(rel)
-		end
-	end)
-end
-
-cpLabel("HUE", 34)
 local HueBar = Instance.new("Frame", ColorPanel)
-HueBar.Size = UDim2.new(1, -20, 0, 14)
-HueBar.Position = UDim2.new(0, 10, 0, 50)
+HueBar.Name = "HueBar"
+HueBar.Size = UDim2.new(0, 200, 0, 18)
+HueBar.Position = UDim2.new(0, 10, 0, 26)
+HueBar.BackgroundColor3 = Color3.new(1, 0, 0)
 HueBar.ClipsDescendants = true
-makeCorner(HueBar, 4)
+
 local HueGradient = Instance.new("UIGradient", HueBar)
 HueGradient.Color = ColorSequence.new({
 	ColorSequenceKeypoint.new(0,    Color3.fromHSV(0,    1, 1)),
@@ -550,328 +228,331 @@ HueGradient.Color = ColorSequence.new({
 	ColorSequenceKeypoint.new(0.83, Color3.fromHSV(0.83, 1, 1)),
 	ColorSequenceKeypoint.new(1,    Color3.fromHSV(1,    1, 1)),
 })
+
 local HueCursor = Instance.new("Frame", HueBar)
-HueCursor.Size = UDim2.new(0, 3, 1, 0)
+HueCursor.Size = UDim2.new(0, 4, 1, 0)
+HueCursor.Position = UDim2.new(0, 0, 0, 0)
 HueCursor.BackgroundColor3 = Color3.new(1, 1, 1)
 HueCursor.BorderSizePixel = 0
-makeCorner(HueCursor, 2)
 
-cpLabel("SATURATION", 72)
-local SatBar, SatCursor = cpSliderBar(88)
-SatCursor.Position = UDim2.new(1, -3, 0, 0)
+local SatLabel = Instance.new("TextLabel", ColorPanel)
+SatLabel.Size = UDim2.new(0, 200, 0, 16)
+SatLabel.Position = UDim2.new(0, 10, 0, 52)
+SatLabel.BackgroundTransparency = 1
+SatLabel.Text = "Saturation"
+SatLabel.Font = Enum.Font.SourceSansBold
+SatLabel.TextColor3 = Color3.new(1, 1, 1)
+SatLabel.TextSize = 13
+SatLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local SatBar = Instance.new("Frame", ColorPanel)
+SatBar.Name = "SatBar"
+SatBar.Size = UDim2.new(0, 200, 0, 18)
+SatBar.Position = UDim2.new(0, 10, 0, 70)
+SatBar.ClipsDescendants = true
+
 local SatGradient = Instance.new("UIGradient", SatBar)
 SatGradient.Color = ColorSequence.new({
 	ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)),
 	ColorSequenceKeypoint.new(1, Color3.new(1, 0, 0)),
 })
 
-cpLabel("BRIGHTNESS", 110)
-local BriBar, BriCursor = cpSliderBar(126)
-BriCursor.Position = UDim2.new(1, -3, 0, 0)
+local SatCursor = Instance.new("Frame", SatBar)
+SatCursor.Size = UDim2.new(0, 4, 1, 0)
+SatCursor.Position = UDim2.new(1, -4, 0, 0)
+SatCursor.BackgroundColor3 = Color3.new(1, 1, 1)
+SatCursor.BorderSizePixel = 0
+
+local BriLabel = Instance.new("TextLabel", ColorPanel)
+BriLabel.Size = UDim2.new(0, 200, 0, 16)
+BriLabel.Position = UDim2.new(0, 10, 0, 96)
+BriLabel.BackgroundTransparency = 1
+BriLabel.Text = "Brightness"
+BriLabel.Font = Enum.Font.SourceSansBold
+BriLabel.TextColor3 = Color3.new(1, 1, 1)
+BriLabel.TextSize = 13
+BriLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local BriBar = Instance.new("Frame", ColorPanel)
+BriBar.Name = "BriBar"
+BriBar.Size = UDim2.new(0, 200, 0, 18)
+BriBar.Position = UDim2.new(0, 10, 0, 114)
+BriBar.ClipsDescendants = true
+
 local BriGradient = Instance.new("UIGradient", BriBar)
 BriGradient.Color = ColorSequence.new({
 	ColorSequenceKeypoint.new(0, Color3.new(0, 0, 0)),
 	ColorSequenceKeypoint.new(1, Color3.new(1, 1, 1)),
 })
 
-cpLabel("CYCLE SPEED", 148)
-local SpeedBar, SpeedCursor = cpSliderBar(164)
+local BriCursor = Instance.new("Frame", BriBar)
+BriCursor.Size = UDim2.new(0, 4, 1, 0)
+BriCursor.Position = UDim2.new(1, -4, 0, 0)
+BriCursor.BackgroundColor3 = Color3.new(1, 1, 1)
+BriCursor.BorderSizePixel = 0
+
+local SpeedLabel = Instance.new("TextLabel", ColorPanel)
+SpeedLabel.Size = UDim2.new(0, 200, 0, 16)
+SpeedLabel.Position = UDim2.new(0, 10, 0, 140)
+SpeedLabel.BackgroundTransparency = 1
+SpeedLabel.Text = "Cycle Speed"
+SpeedLabel.Font = Enum.Font.SourceSansBold
+SpeedLabel.TextColor3 = Color3.new(1, 1, 1)
+SpeedLabel.TextSize = 13
+SpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local SpeedBar = Instance.new("Frame", ColorPanel)
+SpeedBar.Name = "SpeedBar"
+SpeedBar.Size = UDim2.new(0, 200, 0, 18)
+SpeedBar.Position = UDim2.new(0, 10, 0, 158)
+SpeedBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+SpeedBar.ClipsDescendants = true
+
 local SpeedFill = Instance.new("Frame", SpeedBar)
 SpeedFill.Size = UDim2.new(0.2, 0, 1, 0)
-SpeedFill.BackgroundColor3 = ACCENT
+SpeedFill.BackgroundColor3 = Color3.fromRGB(100, 100, 255)
 SpeedFill.BorderSizePixel = 0
-makeCorner(SpeedFill, 4)
+
+local SpeedCursor = Instance.new("Frame", SpeedBar)
+SpeedCursor.Size = UDim2.new(0, 4, 1, 0)
 SpeedCursor.Position = UDim2.new(0.2, -2, 0, 0)
+SpeedCursor.BackgroundColor3 = Color3.new(1, 1, 1)
+SpeedCursor.BorderSizePixel = 0
+
 local SpeedValueLabel = Instance.new("TextLabel", ColorPanel)
-SpeedValueLabel.Size = UDim2.new(0, 80, 0, 12)
-SpeedValueLabel.Position = UDim2.new(1, -90, 0, 150)
+SpeedValueLabel.Size = UDim2.new(0, 200, 0, 14)
+SpeedValueLabel.Position = UDim2.new(0, 10, 0, 178)
 SpeedValueLabel.BackgroundTransparency = 1
-SpeedValueLabel.Text = "4.0"
-SpeedValueLabel.Font = Enum.Font.GothamBold
-SpeedValueLabel.TextSize = 10
-SpeedValueLabel.TextColor3 = TEXT_MUTED
-SpeedValueLabel.TextXAlignment = Enum.TextXAlignment.Right
+SpeedValueLabel.Text = "Speed: 4"
+SpeedValueLabel.Font = Enum.Font.SourceSans
+SpeedValueLabel.TextColor3 = Color3.new(1, 1, 1)
+SpeedValueLabel.TextSize = 12
+SpeedValueLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-local CPDivider2 = Instance.new("Frame", ColorPanel)
-CPDivider2.Size = UDim2.new(1, -20, 0, 1)
-CPDivider2.Position = UDim2.new(0, 10, 0, 185)
-CPDivider2.BackgroundColor3 = BORDER
-CPDivider2.BorderSizePixel = 0
+local RPNameLabel = Instance.new("TextLabel", ColorPanel)
+RPNameLabel.Size = UDim2.new(0, 200, 0, 16)
+RPNameLabel.Position = UDim2.new(0, 10, 0, 198)
+RPNameLabel.BackgroundTransparency = 1
+RPNameLabel.Text = "RP Name"
+RPNameLabel.Font = Enum.Font.SourceSansBold
+RPNameLabel.TextColor3 = Color3.new(1, 1, 1)
+RPNameLabel.TextSize = 13
+RPNameLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-cpLabel("UI GRADIENT MODE", 193)
-
-local GradientToggleBtn = Instance.new("TextButton", ColorPanel)
-GradientToggleBtn.Size = UDim2.new(0, 120, 0, 22)
-GradientToggleBtn.Position = UDim2.new(0, 10, 0, 208)
-GradientToggleBtn.BackgroundColor3 = BG_BTN
-GradientToggleBtn.Font = Enum.Font.GothamBold
-GradientToggleBtn.TextSize = 10
-GradientToggleBtn.Text = "GRADIENT: OFF"
-GradientToggleBtn.TextColor3 = TEXT_MUTED
-makeCorner(GradientToggleBtn, 4)
-makeStroke(GradientToggleBtn, 1, BORDER)
-addHoverEffect(GradientToggleBtn, BG_BTN, BG_BTN_HOV)
-
-local RotationToggleBtn = Instance.new("TextButton", ColorPanel)
-RotationToggleBtn.Size = UDim2.new(0, 120, 0, 22)
-RotationToggleBtn.Position = UDim2.new(0, 140, 0, 208)
-RotationToggleBtn.BackgroundColor3 = BG_BTN
-RotationToggleBtn.Font = Enum.Font.GothamBold
-RotationToggleBtn.TextSize = 10
-RotationToggleBtn.Text = "ROTATION: OFF"
-RotationToggleBtn.TextColor3 = TEXT_MUTED
-makeCorner(RotationToggleBtn, 4)
-makeStroke(RotationToggleBtn, 1, BORDER)
-addHoverEffect(RotationToggleBtn, BG_BTN, BG_BTN_HOV)
-
-local CPDivider3 = Instance.new("Frame", ColorPanel)
-CPDivider3.Size = UDim2.new(1, -20, 0, 1)
-CPDivider3.Position = UDim2.new(0, 10, 0, 238)
-CPDivider3.BackgroundColor3 = BORDER
-CPDivider3.BorderSizePixel = 0
-
-cpLabel("GRADIENT KEYPOINTS", 246)
-
-local KeypointContainer = Instance.new("ScrollingFrame", ColorPanel)
-KeypointContainer.Size = UDim2.new(1, -20, 0, 120)
-KeypointContainer.Position = UDim2.new(0, 10, 0, 262)
-KeypointContainer.BackgroundTransparency = 1
-KeypointContainer.ScrollBarThickness = 3
-KeypointContainer.ScrollBarImageColor3 = ACCENT
-KeypointContainer.BorderSizePixel = 0
-KeypointContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
-local KPLayout = Instance.new("UIListLayout", KeypointContainer)
-KPLayout.Padding = UDim.new(0, 4)
-
-local AddKPBtn = Instance.new("TextButton", ColorPanel)
-AddKPBtn.Size = UDim2.new(1, -20, 0, 22)
-AddKPBtn.Position = UDim2.new(0, 10, 0, 390)
-AddKPBtn.BackgroundColor3 = BG_BTN
-AddKPBtn.Font = Enum.Font.GothamBold
-AddKPBtn.TextSize = 10
-AddKPBtn.Text = "+ ADD KEYPOINT"
-AddKPBtn.TextColor3 = ACCENT
-makeCorner(AddKPBtn, 4)
-makeStroke(AddKPBtn, 1, BORDER_ACCENT)
-addHoverEffect(AddKPBtn, BG_BTN, BG_BTN_HOV)
-
-local CPDivider4 = Instance.new("Frame", ColorPanel)
-CPDivider4.Size = UDim2.new(1, -20, 0, 1)
-CPDivider4.Position = UDim2.new(0, 10, 0, 420)
-CPDivider4.BackgroundColor3 = BORDER
-CPDivider4.BorderSizePixel = 0
-
-local CPBottomRow = Instance.new("Frame", ColorPanel)
-CPBottomRow.Size = UDim2.new(1, -20, 0, 26)
-CPBottomRow.Position = UDim2.new(0, 10, 0, 428)
-CPBottomRow.BackgroundTransparency = 1
-
-local ColorPreview = Instance.new("Frame", CPBottomRow)
-ColorPreview.Size = UDim2.new(0, 26, 1, 0)
-ColorPreview.BackgroundColor3 = Color3.fromHSV(0, 1, 1)
-makeCorner(ColorPreview, 4)
-makeStroke(ColorPreview, 1, BORDER)
-
-local RPNameBox = Instance.new("TextBox", CPBottomRow)
-RPNameBox.Size = UDim2.new(0, 100, 1, 0)
-RPNameBox.Position = UDim2.new(0, 34, 0, 0)
-RPNameBox.BackgroundColor3 = BG_BTN
-RPNameBox.Font = Enum.Font.Gotham
-RPNameBox.TextSize = 11
-RPNameBox.PlaceholderText = "RP Name..."
-RPNameBox.PlaceholderColor3 = TEXT_MUTED
-RPNameBox.TextColor3 = TEXT_PRIMARY
+local RPNameBox = Instance.new("TextBox", ColorPanel)
+RPNameBox.Size = UDim2.new(0, 200, 0, 26)
+RPNameBox.Position = UDim2.new(0, 10, 0, 216)
+RPNameBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+RPNameBox.TextColor3 = Color3.new(1, 1, 1)
+RPNameBox.PlaceholderText = "Enter RP name..."
+RPNameBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+RPNameBox.Font = Enum.Font.SourceSans
+RPNameBox.TextSize = 14
 RPNameBox.Text = player.DisplayName or player.Name
 RPNameBox.ClearTextOnFocus = false
-makeCorner(RPNameBox, 4)
-makeStroke(RPNameBox, 1, BORDER)
-local rpPad = Instance.new("UIPadding", RPNameBox)
-rpPad.PaddingLeft = UDim.new(0, 6)
 
-local ColorStartBtn = Instance.new("TextButton", CPBottomRow)
-ColorStartBtn.Size = UDim2.new(0, 70, 1, 0)
-ColorStartBtn.Position = UDim2.new(1, -70, 0, 0)
-ColorStartBtn.BackgroundColor3 = ACCENT
-ColorStartBtn.Font = Enum.Font.GothamBold
-ColorStartBtn.TextSize = 11
-ColorStartBtn.Text = "START"
+local UIStrokeRPName = Instance.new("UIStroke", RPNameBox)
+UIStrokeRPName.Color = Color3.new(1, 1, 1)
+UIStrokeRPName.Thickness = 1
+
+local PreviewLabel = Instance.new("TextLabel", ColorPanel)
+PreviewLabel.Size = UDim2.new(0, 90, 0, 16)
+PreviewLabel.Position = UDim2.new(0, 10, 0, 250)
+PreviewLabel.BackgroundTransparency = 1
+PreviewLabel.Text = "Preview"
+PreviewLabel.Font = Enum.Font.SourceSansBold
+PreviewLabel.TextColor3 = Color3.new(1, 1, 1)
+PreviewLabel.TextSize = 13
+PreviewLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local ColorPreview = Instance.new("Frame", ColorPanel)
+ColorPreview.Size = UDim2.new(0, 40, 0, 24)
+ColorPreview.Position = UDim2.new(0, 10, 0, 268)
+ColorPreview.BackgroundColor3 = Color3.fromHSV(0, 1, 1)
+
+local UIStrokePreview = Instance.new("UIStroke", ColorPreview)
+UIStrokePreview.Color = Color3.new(1, 1, 1)
+UIStrokePreview.Thickness = 1
+
+local ColorStartBtn = Instance.new("TextButton", ColorPanel)
+ColorStartBtn.Size = UDim2.new(0, 100, 0, 24)
+ColorStartBtn.Position = UDim2.new(0, 110, 0, 268)
+ColorStartBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ColorStartBtn.Font = Enum.Font.SourceSansBold
+ColorStartBtn.Text = "Start"
 ColorStartBtn.TextColor3 = Color3.new(1, 1, 1)
-makeCorner(ColorStartBtn, 4)
-addHoverEffect(ColorStartBtn, ACCENT, Color3.fromRGB(100, 60, 220))
+ColorStartBtn.TextSize = 13
 
-local GradientRemote
-pcall(function()
-	local Remotes = ReplicatedStorage:WaitForChild("Remotes", 3)
-	if Remotes then GradientRemote = Remotes:FindFirstChild("UpdateRPGradient") end
+local UIStrokeColorStart = Instance.new("UIStroke", ColorStartBtn)
+UIStrokeColorStart.Color = Color3.new(1, 1, 1)
+UIStrokeColorStart.ApplyStrokeMode = "Border"
+
+Minimize.MouseButton1Click:Connect(function()
+	Main.Visible = false
+	Open.Visible = true
 end)
 
-local gradientEnabled = false
-local rotationEnabled = false
-local gradientRotation = 0
-local gradientRotationConnection = nil
+Open.MouseButton1Click:Connect(function()
+	Main.Visible = true
+	Open.Visible = false
+end)
 
-local keypoints = {
-	{pos = 0, color = Color3.fromRGB(255, 80, 80)},
-	{pos = 0.5, color = Color3.fromRGB(80, 80, 255)},
-	{pos = 1, color = Color3.fromRGB(80, 255, 80)},
-}
+local mouseUnlocked = false
+local mouseUnlockConnection = nil
 
-local function buildColorSequence()
-	local kps = {}
-	for _, kp in ipairs(keypoints) do
-		table.insert(kps, ColorSequenceKeypoint.new(math.clamp(kp.pos, 0, 1), kp.color))
+local function stopMouseUnlock()
+	mouseUnlocked = false
+	MouseUnlock.Text = "MouseUnlock"
+	if mouseUnlockConnection then
+		mouseUnlockConnection:Disconnect()
+		mouseUnlockConnection = nil
 	end
-	table.sort(kps, function(a, b) return a.Time < b.Time end)
-	return ColorSequence.new(kps)
 end
 
-local function colorFromHex(hex)
-	hex = hex:gsub("#", "")
-	if #hex ~= 6 then return Color3.new(1, 1, 1) end
-	local r = tonumber(hex:sub(1,2), 16) or 255
-	local g = tonumber(hex:sub(3,4), 16) or 255
-	local b = tonumber(hex:sub(5,6), 16) or 255
-	return Color3.fromRGB(r, g, b)
-end
-
-local function hexFromColor(color)
-	local function h(n) return string.format("%02X", math.floor(n * 255)) end
-	return h(color.R) .. h(color.G) .. h(color.B)
-end
-
-local function rebuildKeypointUI()
-	for _, child in ipairs(KeypointContainer:GetChildren()) do
-		if not child:IsA("UIListLayout") then child:Destroy() end
-	end
-
-	for i, kp in ipairs(keypoints) do
-		local row = Instance.new("Frame", KeypointContainer)
-		row.Size = UDim2.new(1, 0, 0, 26)
-		row.BackgroundColor3 = BG_BTN
-		makeCorner(row, 4)
-		makeStroke(row, 1, BORDER)
-
-		local swatch = Instance.new("Frame", row)
-		swatch.Size = UDim2.new(0, 20, 0, 20)
-		swatch.Position = UDim2.new(0, 4, 0.5, -10)
-		swatch.BackgroundColor3 = kp.color
-		makeCorner(swatch, 3)
-		makeStroke(swatch, 1, BORDER)
-
-		local hexBox = Instance.new("TextBox", row)
-		hexBox.Size = UDim2.new(0, 70, 0, 20)
-		hexBox.Position = UDim2.new(0, 28, 0.5, -10)
-		hexBox.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
-		hexBox.Font = Enum.Font.Code
-		hexBox.TextSize = 10
-		hexBox.Text = hexFromColor(kp.color)
-		hexBox.TextColor3 = TEXT_PRIMARY
-		hexBox.ClearTextOnFocus = false
-		makeCorner(hexBox, 3)
-		local hbPad = Instance.new("UIPadding", hexBox)
-		hbPad.PaddingLeft = UDim.new(0, 4)
-
-		hexBox.FocusLost:Connect(function()
-			local newColor = colorFromHex(hexBox.Text)
-			keypoints[i].color = newColor
-			swatch.BackgroundColor3 = newColor
-			hexBox.Text = hexFromColor(newColor)
-		end)
-
-		local posBox = Instance.new("TextBox", row)
-		posBox.Size = UDim2.new(0, 44, 0, 20)
-		posBox.Position = UDim2.new(0, 102, 0.5, -10)
-		posBox.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
-		posBox.Font = Enum.Font.Code
-		posBox.TextSize = 10
-		posBox.Text = string.format("%.2f", kp.pos)
-		posBox.TextColor3 = TEXT_PRIMARY
-		posBox.ClearTextOnFocus = false
-		makeCorner(posBox, 3)
-		local pbPad = Instance.new("UIPadding", posBox)
-		pbPad.PaddingLeft = UDim.new(0, 4)
-
-		posBox.FocusLost:Connect(function()
-			local val = tonumber(posBox.Text)
-			if val then
-				keypoints[i].pos = math.clamp(val, 0, 1)
-				posBox.Text = string.format("%.2f", keypoints[i].pos)
-			else
-				posBox.Text = string.format("%.2f", kp.pos)
-			end
-		end)
-
-		local delBtn = Instance.new("TextButton", row)
-		delBtn.Size = UDim2.new(0, 20, 0, 20)
-		delBtn.Position = UDim2.new(1, -24, 0.5, -10)
-		delBtn.BackgroundColor3 = Color3.fromRGB(40, 15, 18)
-		delBtn.Font = Enum.Font.GothamBold
-		delBtn.TextSize = 12
-		delBtn.Text = "×"
-		delBtn.TextColor3 = RED
-		makeCorner(delBtn, 3)
-		addHoverEffect(delBtn, Color3.fromRGB(40, 15, 18), Color3.fromRGB(60, 20, 25))
-
-		local capturedI = i
-		delBtn.MouseButton1Click:Connect(function()
-			if #keypoints > 2 then
-				table.remove(keypoints, capturedI)
-				rebuildKeypointUI()
-			end
-		end)
-	end
-
-	KPLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-		KeypointContainer.CanvasSize = UDim2.new(0, 0, 0, KPLayout.AbsoluteContentSize.Y)
+local function startMouseUnlock()
+	mouseUnlocked = true
+	MouseUnlock.Text = "MouseUnlock [ON]"
+	mouseUnlockConnection = RunService.RenderStepped:Connect(function()
+		UIS.MouseBehavior = Enum.MouseBehavior.Default
 	end)
-	KeypointContainer.CanvasSize = UDim2.new(0, 0, 0, KPLayout.AbsoluteContentSize.Y)
 end
 
-rebuildKeypointUI()
-
-AddKPBtn.MouseButton1Click:Connect(function()
-	table.insert(keypoints, {pos = 0.5, color = Color3.fromRGB(200, 100, 255)})
-	rebuildKeypointUI()
+MouseUnlock.MouseButton1Click:Connect(function()
+	if mouseUnlocked then stopMouseUnlock() else startMouseUnlock() end
 end)
 
-GradientToggleBtn.MouseButton1Click:Connect(function()
-	gradientEnabled = not gradientEnabled
-	if gradientEnabled then
-		GradientToggleBtn.Text = "GRADIENT: ON"
-		GradientToggleBtn.TextColor3 = GREEN
-		makeStroke(GradientToggleBtn, 1, GREEN)
-	else
-		GradientToggleBtn.Text = "GRADIENT: OFF"
-		GradientToggleBtn.TextColor3 = TEXT_MUTED
-		makeStroke(GradientToggleBtn, 1, BORDER)
+local aimLocking = false
+local aimlockTarget = nil
+local aimlockConnection = nil
+local highlight = nil
+
+local function removeHighlight()
+	if highlight then highlight:Destroy(); highlight = nil end
+end
+
+local function stopAimlock()
+	aimLocking = false
+	if aimlockConnection then aimlockConnection:Disconnect(); aimlockConnection = nil end
+	removeHighlight()
+	aimlockTarget = nil
+end
+
+local function startAimlock(targetPlayer)
+	if aimLocking and aimlockTarget == targetPlayer then stopAimlock() return end
+	stopAimlock()
+	local char = targetPlayer.Character
+	if not char then return end
+	aimLocking = true
+	aimlockTarget = targetPlayer
+	highlight = Instance.new("Highlight")
+	highlight.FillColor = Color3.fromRGB(255, 0, 0)
+	highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+	highlight.FillTransparency = 0.5
+	highlight.Parent = char
+	aimlockConnection = RunService.RenderStepped:Connect(function()
+		local tChar = aimlockTarget and aimlockTarget.Character
+		if not tChar or not tChar:FindFirstChild("HumanoidRootPart") then stopAimlock() return end
+		local cam = workspace.CurrentCamera
+		cam.CFrame = CFrame.new(cam.CFrame.Position, tChar.HumanoidRootPart.Position)
+	end)
+end
+
+Players.PlayerRemoving:Connect(function(plr)
+	if aimlockTarget == plr then stopAimlock() end
+end)
+
+local flying = false
+local flyBV, flyBG, flyConnection = nil, nil, nil
+
+local function stopFly()
+	flying = false
+	if flyBV then flyBV:Destroy(); flyBV = nil end
+	if flyBG then flyBG:Destroy(); flyBG = nil end
+	if flyConnection then flyConnection:Disconnect(); flyConnection = nil end
+	Fly.Text = "Fly"
+end
+
+local function startFly()
+	local speed = tonumber(AmountTextBox.Text) or 70
+	local char = player.Character or player.CharacterAdded:Wait()
+	local root = char:WaitForChild("HumanoidRootPart")
+	flying = true
+	Fly.Text = "Fly [ON]"
+	flyBV = Instance.new("BodyVelocity")
+	flyBV.MaxForce = Vector3.new(1, 1, 1) * 100000
+	flyBV.Parent = root
+	flyBG = Instance.new("BodyGyro")
+	flyBG.MaxTorque = Vector3.new(1, 1, 1) * 100000
+	flyBG.CFrame = root.CFrame
+	flyBG.Parent = root
+	flyConnection = RunService.RenderStepped:Connect(function()
+		if flying and root and root.Parent then
+			local cam = workspace.CurrentCamera
+			local s = tonumber(AmountTextBox.Text) or speed
+			flyBV.Velocity = cam.CFrame.LookVector * s
+			flyBG.CFrame = cam.CFrame
+		end
+	end)
+end
+
+UIS.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.E and Currentselected.Text == "Current Selected: Fly" then
+		if flying then stopFly() else startFly() end
 	end
 end)
 
-RotationToggleBtn.MouseButton1Click:Connect(function()
-	rotationEnabled = not rotationEnabled
-	if rotationEnabled then
-		RotationToggleBtn.Text = "ROTATION: ON"
-		RotationToggleBtn.TextColor3 = GREEN
-		makeStroke(RotationToggleBtn, 1, GREEN)
-	else
-		RotationToggleBtn.Text = "ROTATION: OFF"
-		RotationToggleBtn.TextColor3 = TEXT_MUTED
-		makeStroke(RotationToggleBtn, 1, BORDER)
-	end
+player.CharacterAdded:Connect(function()
+	if flying then stopFly() end
+end)
+
+local tpwalking = false
+
+local function stopTpWalk()
+	tpwalking = false
+	TpWalk.Text = "TpWalk"
+end
+
+local function startTpWalk()
+	local speed = tonumber(AmountTextBox.Text) or 4
+	tpwalking = true
+	TpWalk.Text = "TpWalk [ON]"
+	local char = player.Character
+	local hum = char and char:FindFirstChildWhichIsA("Humanoid")
+	if not hum then stopTpWalk() return end
+	task.spawn(function()
+		while tpwalking and char and hum and hum.Parent do
+			local delta = RunService.Heartbeat:Wait()
+			if hum.MoveDirection.Magnitude > 0 then
+				local s = tonumber(AmountTextBox.Text) or speed
+				pcall(function() char:TranslateBy(hum.MoveDirection * s * delta * 10) end)
+			end
+			if not player.Character or player.Character ~= char then stopTpWalk() end
+		end
+	end)
+end
+
+player.CharacterAdded:Connect(function()
+	if tpwalking then stopTpWalk() end
 end)
 
 local pickedH = 0
 local pickedS = 1
 local pickedV = 1
-local colorCycleSpeed = 4
+local colorCycleSpeed = 4   -- max 20
 local colorRunning = false
 local colorConnection = nil
 local colorTime = 0
+local colorWord = RPNameBox.Text
 local colorCharCount = 1
 local lastNameUpdate = 0
 local lastBioUpdate = 0
 local nameUpdateFreq = 0.08
 local bioUpdateFreq = 0.08
+
+local function getPickedColor()
+	return Color3.fromHSV(pickedH, pickedS, pickedV)
+end
 
 local function updateSatGradient()
 	SatGradient.Color = ColorSequence.new({
@@ -888,7 +569,7 @@ local function updateBriGradient()
 end
 
 local function updatePreview()
-	ColorPreview.BackgroundColor3 = Color3.fromHSV(pickedH, pickedS, pickedV)
+	ColorPreview.BackgroundColor3 = getPickedColor()
 end
 
 local function updateAllGradients()
@@ -897,32 +578,61 @@ local function updateAllGradients()
 	updatePreview()
 end
 
+local function makeSliderDrag(bar, cursor, onChanged)
+	local draggingSlider = false
+	bar.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			draggingSlider = true
+			local rel = math.clamp((UIS:GetMouseLocation().X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
+			cursor.Position = UDim2.new(rel, -2, 0, 0)
+			onChanged(rel)
+		end
+	end)
+	UIS.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			draggingSlider = false
+		end
+	end)
+	UIS.InputChanged:Connect(function(input)
+		if draggingSlider and input.UserInputType == Enum.UserInputType.MouseMovement then
+			local rel = math.clamp((UIS:GetMouseLocation().X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
+			cursor.Position = UDim2.new(rel, -2, 0, 0)
+			onChanged(rel)
+		end
+	end)
+end
+
 makeSliderDrag(HueBar, HueCursor, function(rel)
 	pickedH = rel
 	updateAllGradients()
 end)
+
 makeSliderDrag(SatBar, SatCursor, function(rel)
 	pickedS = rel
 	updateAllGradients()
 end)
+
 makeSliderDrag(BriBar, BriCursor, function(rel)
 	pickedV = rel
 	updateAllGradients()
 end)
+
 makeSliderDrag(SpeedBar, SpeedCursor, function(rel)
 	colorCycleSpeed = math.max(0.1, rel * 20)
 	SpeedFill.Size = UDim2.new(rel, 0, 1, 0)
-	SpeedValueLabel.Text = string.format("%.1f", colorCycleSpeed)
+	SpeedValueLabel.Text = "Speed: " .. math.floor(colorCycleSpeed * 10) / 10
 end)
 
 local ColorRemote, NameRemote, BioColorRemote, isBioFunction
 pcall(function()
 	local Remotes = ReplicatedStorage:WaitForChild("Remotes", 3)
 	if Remotes then
-		ColorRemote = Remotes:FindFirstChild("UpdateRPColor")
-		NameRemote = Remotes:FindFirstChild("UpdateRPName")
+		ColorRemote    = Remotes:FindFirstChild("UpdateRPColor")
+		NameRemote     = Remotes:FindFirstChild("UpdateRPName")
 		BioColorRemote = Remotes:FindFirstChild("UpdateBioColor")
-		if BioColorRemote then isBioFunction = BioColorRemote:IsA("RemoteFunction") end
+		if BioColorRemote then
+			isBioFunction = BioColorRemote:IsA("RemoteFunction")
+		end
 	end
 end)
 
@@ -939,17 +649,12 @@ end
 local function fireNameRemote(text)
 	if NameRemote then pcall(function() NameRemote:FireServer(text) end) end
 end
-local function fireGradientRemote(seq, rot)
-	if GradientRemote then pcall(function() GradientRemote:FireServer(seq, rot) end) end
-end
 
 local function stopColor()
 	colorRunning = false
 	if colorConnection then colorConnection:Disconnect(); colorConnection = nil end
-	if gradientRotationConnection then gradientRotationConnection:Disconnect(); gradientRotationConnection = nil end
-	ColorStartBtn.Text = "START"
-	ColorStartBtn.BackgroundColor3 = ACCENT
-	setStatus("Color stopped", TEXT_MUTED)
+	ColorStartBtn.Text = "Start"
+	ColorBtn.Text = "Color"
 end
 
 local function startColor()
@@ -958,23 +663,15 @@ local function startColor()
 	colorCharCount = 1
 	lastNameUpdate = 0
 	lastBioUpdate = 0
-	gradientRotation = 0
-	local word = RPNameBox.Text ~= "" and RPNameBox.Text or (player.DisplayName or player.Name)
-	ColorStartBtn.Text = "STOP"
-	ColorStartBtn.BackgroundColor3 = RED
-	setStatus("Color running", GREEN)
+	colorWord = RPNameBox.Text ~= "" and RPNameBox.Text or (player.DisplayName or player.Name)
+	ColorStartBtn.Text = "Stop"
+	ColorBtn.Text = "Color [ON]"
 
 	colorConnection = RunService.Heartbeat:Connect(function(dt)
 		colorTime += dt * colorCycleSpeed
+
 		local cycledH = (pickedH + colorTime * 0.1) % 1
 		local color = Color3.fromHSV(cycledH, pickedS, pickedV)
-
-		if gradientEnabled then
-			if rotationEnabled then
-				gradientRotation = (gradientRotation + dt * colorCycleSpeed * 30) % 360
-			end
-			fireGradientRemote(buildColorSequence(), rotationEnabled and gradientRotation or 0)
-		end
 
 		fireColorRemote(color)
 
@@ -987,301 +684,15 @@ local function startColor()
 		lastNameUpdate += dt
 		if lastNameUpdate >= nameUpdateFreq then
 			lastNameUpdate = 0
-			local text = string.sub(word, 1, colorCharCount)
+			local text = string.sub(colorWord, 1, colorCharCount)
 			fireNameRemote(text)
-			colorCharCount = (colorCharCount >= #word) and 1 or (colorCharCount + 1)
+			colorCharCount = (colorCharCount >= #colorWord) and 1 or (colorCharCount + 1)
 		end
 	end)
 end
 
 ColorStartBtn.MouseButton1Click:Connect(function()
 	if colorRunning then stopColor() else startColor() end
-end)
-
-local TpPage = makeContentPage()
-local AimlockPage = makeContentPage()
-local FlyPage = makeContentPage()
-local TpWalkPage = makeContentPage()
-local MousePage = makeContentPage()
-local ColorPageDummy = makeContentPage()
-
-local pages = {TpPage, AimlockPage, FlyPage, TpWalkPage, MousePage, ColorPageDummy}
-
-local function showPage(page)
-	for _, p in ipairs(pages) do p.Visible = false end
-	page.Visible = true
-end
-
-makeSectionHeader(TpPage, "TELEPORT", 10)
-makeSectionHeader(AimlockPage, "AIMLOCK", 10)
-makeSectionHeader(FlyPage, "FLY", 10)
-makeSectionHeader(TpWalkPage, "TPWALK", 10)
-makeSectionHeader(MousePage, "MOUSE UNLOCK", 10)
-makeSectionHeader(ColorPageDummy, "COLOR", 10)
-
-local TpAmountBox = makeTextBox(TpPage, "Speed...", 40, 200)
-TpAmountBox.Visible = false
-
-local FlyAmountBox = makeTextBox(FlyPage, "Fly speed (default 70)...", 40, 220)
-local TpWalkAmountBox = makeTextBox(TpWalkPage, "Walk speed (default 4)...", 40, 220)
-
-local TpInfoLabel = makeLabel(TpPage, "Select a player from the list on the right", UDim2.new(1, -20, 0, 30), UDim2.new(0, 10, 0, 40), false)
-TpInfoLabel.TextColor3 = TEXT_MUTED
-TpInfoLabel.TextWrapped = true
-
-local AimlockInfoLabel = makeLabel(AimlockPage, "Select a player from the list on the right", UDim2.new(1, -20, 0, 30), UDim2.new(0, 10, 0, 40), false)
-AimlockInfoLabel.TextColor3 = TEXT_MUTED
-AimlockInfoLabel.TextWrapped = true
-
-local FlyInfoLabel = makeLabel(FlyPage, "Press E to toggle fly once selected. Set speed above.", UDim2.new(1, -20, 0, 30), UDim2.new(0, 10, 0, 80), false)
-FlyInfoLabel.TextColor3 = TEXT_MUTED
-FlyInfoLabel.TextWrapped = true
-
-local TpWalkInfoLabel = makeLabel(TpWalkPage, "Moves your character in the walk direction faster.", UDim2.new(1, -20, 0, 30), UDim2.new(0, 10, 0, 80), false)
-TpWalkInfoLabel.TextColor3 = TEXT_MUTED
-TpWalkInfoLabel.TextWrapped = true
-
-local FlyToggleBtn, FlyStatusDot = makeFeatureButton(FlyPage, "Toggle Fly", 80)
-local TpWalkToggleBtn, TpWalkStatusDot = makeFeatureButton(TpWalkPage, "Toggle TpWalk", 80)
-local MouseToggleBtn, MouseStatusDot = makeFeatureButton(MousePage, "Toggle MouseUnlock", 40)
-local ColorOpenBtn, ColorOpenDot = makeFeatureButton(ColorPageDummy, "Open Color Panel", 40)
-
-local ColorInfoLabel = makeLabel(ColorPageDummy, "Opens the full color panel on the right side.", UDim2.new(1, -20, 0, 30), UDim2.new(0, 10, 0, 80), false)
-ColorInfoLabel.TextColor3 = TEXT_MUTED
-ColorInfoLabel.TextWrapped = true
-
-local TpNavBtn, TpNavText, TpNavIcon, TpNavBar = makeNavButton("Teleport", "⊕")
-local AimNavBtn, AimNavText, AimNavIcon, AimNavBar = makeNavButton("Aimlock", "◎")
-local FlyNavBtn, FlyNavText, FlyNavIcon, FlyNavBar = makeNavButton("Fly", "↑")
-local TpWalkNavBtn, TpWalkNavText, TpWalkNavIcon, TpWalkNavBar = makeNavButton("TpWalk", "⇒")
-local MouseNavBtn, MouseNavText, MouseNavIcon, MouseNavBar = makeNavButton("MouseUnlock", "⊙")
-local ColorNavBtn, ColorNavText, ColorNavIcon, ColorNavBar = makeNavButton("Color", "◈")
-
-local navItems = {
-	{btn=TpNavBtn, text=TpNavText, icon=TpNavIcon, bar=TpNavBar, page=TpPage},
-	{btn=AimNavBtn, text=AimNavText, icon=AimNavIcon, bar=AimNavBar, page=AimlockPage},
-	{btn=FlyNavBtn, text=FlyNavText, icon=FlyNavIcon, bar=FlyNavBar, page=FlyPage},
-	{btn=TpWalkNavBtn, text=TpWalkNavText, icon=TpWalkNavIcon, bar=TpWalkNavBar, page=TpWalkPage},
-	{btn=MouseNavBtn, text=MouseNavText, icon=MouseNavIcon, bar=MouseNavBar, page=MousePage},
-	{btn=ColorNavBtn, text=ColorNavText, icon=ColorNavIcon, bar=ColorNavBar, page=ColorPageDummy},
-}
-
-local activeNavItem = nil
-
-local function setActiveNav(item)
-	if activeNavItem then
-		tweenBgColor(activeNavItem.btn, BG_MID)
-		activeNavItem.text.TextColor3 = TEXT_MUTED
-		activeNavItem.icon.TextColor3 = TEXT_MUTED
-		activeNavItem.bar.Visible = false
-	end
-	activeNavItem = item
-	tweenBgColor(item.btn, BG_BTN_HOV)
-	item.text.TextColor3 = TEXT_PRIMARY
-	item.icon.TextColor3 = ACCENT
-	item.bar.Visible = true
-	showPage(item.page)
-end
-
-for _, item in ipairs(navItems) do
-	local capturedItem = item
-	item.btn.MouseButton1Click:Connect(function()
-		setActiveNav(capturedItem)
-	end)
-end
-
-setActiveNav(navItems[1])
-showPage(TpPage)
-
-MinimizeBtn.MouseButton1Click:Connect(function()
-	Main.Visible = false
-	Open.Visible = true
-	PlayerList.Visible = false
-	ColorPanel.Visible = false
-end)
-
-CloseBtn.MouseButton1Click:Connect(function()
-	Main.Visible = false
-	Open.Visible = true
-	PlayerList.Visible = false
-	ColorPanel.Visible = false
-end)
-
-Open.MouseButton1Click:Connect(function()
-	Main.Visible = true
-	Open.Visible = false
-end)
-
-local mouseUnlocked = false
-local mouseUnlockConnection = nil
-
-local function stopMouseUnlock()
-	mouseUnlocked = false
-	MouseToggleBtn.Text = "Toggle MouseUnlock"
-	MouseStatusDot.BackgroundColor3 = TEXT_MUTED
-	if mouseUnlockConnection then mouseUnlockConnection:Disconnect(); mouseUnlockConnection = nil end
-	setStatus("MouseUnlock disabled", TEXT_MUTED)
-end
-
-local function startMouseUnlock()
-	mouseUnlocked = true
-	MouseToggleBtn.Text = "MouseUnlock [ON]"
-	MouseStatusDot.BackgroundColor3 = GREEN
-	mouseUnlockConnection = RunService.RenderStepped:Connect(function()
-		UIS.MouseBehavior = Enum.MouseBehavior.Default
-	end)
-	setStatus("MouseUnlock active", GREEN)
-end
-
-MouseToggleBtn.MouseButton1Click:Connect(function()
-	if mouseUnlocked then stopMouseUnlock() else startMouseUnlock() end
-end)
-
-local aimLocking = false
-local aimlockTarget = nil
-local aimlockConnection = nil
-local aimHighlight = nil
-
-local function removeHighlight()
-	if aimHighlight then aimHighlight:Destroy(); aimHighlight = nil end
-end
-
-local function stopAimlock()
-	aimLocking = false
-	if aimlockConnection then aimlockConnection:Disconnect(); aimlockConnection = nil end
-	removeHighlight()
-	aimlockTarget = nil
-	AimNavIcon.TextColor3 = activeNavItem == navItems[2] and ACCENT or TEXT_MUTED
-	setStatus("Aimlock off", TEXT_MUTED)
-end
-
-local function startAimlock(targetPlayer)
-	if aimLocking and aimlockTarget == targetPlayer then stopAimlock() return end
-	stopAimlock()
-	local char = targetPlayer.Character
-	if not char then return end
-	aimLocking = true
-	aimlockTarget = targetPlayer
-	aimHighlight = Instance.new("Highlight")
-	aimHighlight.FillColor = Color3.fromRGB(255, 50, 50)
-	aimHighlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-	aimHighlight.FillTransparency = 0.5
-	aimHighlight.Parent = char
-	aimlockConnection = RunService.RenderStepped:Connect(function()
-		local tChar = aimlockTarget and aimlockTarget.Character
-		if not tChar or not tChar:FindFirstChild("HumanoidRootPart") then stopAimlock() return end
-		local cam = workspace.CurrentCamera
-		cam.CFrame = CFrame.new(cam.CFrame.Position, tChar.HumanoidRootPart.Position)
-	end)
-	setStatus("Aimlocked: " .. targetPlayer.Name, ACCENT2)
-end
-
-Players.PlayerRemoving:Connect(function(plr)
-	if aimlockTarget == plr then stopAimlock() end
-end)
-
-local flying = false
-local flyBV, flyBG, flyConnection = nil, nil, nil
-
-local function stopFly()
-	flying = false
-	if flyBV then flyBV:Destroy(); flyBV = nil end
-	if flyBG then flyBG:Destroy(); flyBG = nil end
-	if flyConnection then flyConnection:Disconnect(); flyConnection = nil end
-	FlyToggleBtn.Text = "Toggle Fly"
-	FlyStatusDot.BackgroundColor3 = TEXT_MUTED
-	setStatus("Fly off", TEXT_MUTED)
-end
-
-local function startFly()
-	local speed = tonumber(FlyAmountBox.Text) or 70
-	local char = player.Character or player.CharacterAdded:Wait()
-	local root = char:WaitForChild("HumanoidRootPart")
-	flying = true
-	FlyToggleBtn.Text = "Fly [ON]"
-	FlyStatusDot.BackgroundColor3 = GREEN
-	flyBV = Instance.new("BodyVelocity")
-	flyBV.MaxForce = Vector3.new(1, 1, 1) * 100000
-	flyBV.Parent = root
-	flyBG = Instance.new("BodyGyro")
-	flyBG.MaxTorque = Vector3.new(1, 1, 1) * 100000
-	flyBG.CFrame = root.CFrame
-	flyBG.Parent = root
-	flyConnection = RunService.RenderStepped:Connect(function()
-		if flying and root and root.Parent then
-			local cam = workspace.CurrentCamera
-			local s = tonumber(FlyAmountBox.Text) or speed
-			flyBV.Velocity = cam.CFrame.LookVector * s
-			flyBG.CFrame = cam.CFrame
-		end
-	end)
-	setStatus("Flying at speed " .. tostring(speed), GREEN)
-end
-
-FlyToggleBtn.MouseButton1Click:Connect(function()
-	if flying then stopFly() else startFly() end
-end)
-
-UIS.InputBegan:Connect(function(input, gpe)
-	if gpe then return end
-	if input.KeyCode == Enum.KeyCode.E and activeNavItem == navItems[3] then
-		if flying then stopFly() else startFly() end
-	end
-end)
-
-player.CharacterAdded:Connect(function()
-	if flying then stopFly() end
-end)
-
-local tpwalking = false
-
-local function stopTpWalk()
-	tpwalking = false
-	TpWalkToggleBtn.Text = "Toggle TpWalk"
-	TpWalkStatusDot.BackgroundColor3 = TEXT_MUTED
-	setStatus("TpWalk off", TEXT_MUTED)
-end
-
-local function startTpWalk()
-	local speed = tonumber(TpWalkAmountBox.Text) or 4
-	tpwalking = true
-	TpWalkToggleBtn.Text = "TpWalk [ON]"
-	TpWalkStatusDot.BackgroundColor3 = GREEN
-	local char = player.Character
-	local hum = char and char:FindFirstChildWhichIsA("Humanoid")
-	if not hum then stopTpWalk() return end
-	task.spawn(function()
-		while tpwalking and char and hum and hum.Parent do
-			local delta = RunService.Heartbeat:Wait()
-			if hum.MoveDirection.Magnitude > 0 then
-				local s = tonumber(TpWalkAmountBox.Text) or speed
-				pcall(function() char:TranslateBy(hum.MoveDirection * s * delta * 10) end)
-			end
-			if not player.Character or player.Character ~= char then stopTpWalk() end
-		end
-	end)
-	setStatus("TpWalk at speed " .. tostring(speed), GREEN)
-end
-
-TpWalkToggleBtn.MouseButton1Click:Connect(function()
-	if tpwalking then stopTpWalk() else startTpWalk() end
-end)
-
-player.CharacterAdded:Connect(function()
-	if tpwalking then stopTpWalk() end
-end)
-
-ColorOpenBtn.MouseButton1Click:Connect(function()
-	ColorPanel.Visible = not ColorPanel.Visible
-	if ColorPanel.Visible then
-		ColorOpenDot.BackgroundColor3 = GREEN
-		ColorOpenBtn.Text = "Close Color Panel"
-		setStatus("Color panel open", ACCENT)
-	else
-		ColorOpenDot.BackgroundColor3 = TEXT_MUTED
-		ColorOpenBtn.Text = "Open Color Panel"
-		setStatus("Ready", TEXT_MUTED)
-	end
 end)
 
 local playerButtons = {}
@@ -1296,12 +707,10 @@ local function createPlayerButton(targetPlayer)
 	btn.Text = targetPlayer.Name
 	btn.Visible = true
 	btn.Parent = ScrollingList
-	addHoverEffect(btn, BG_BTN, BG_BTN_HOV)
-
 	btn.MouseButton1Click:Connect(function()
-		CurrentSelectedPlayer.Text = targetPlayer.Name
-
-		if activeNavItem == navItems[1] then
+		CurrentSelectedPlayer.Text = "Current Selected Player: " .. targetPlayer.Name
+		local feature = Currentselected.Text
+		if feature == "Current Selected: TP" then
 			local char = player.Character
 			local targetChar = targetPlayer.Character
 			if char and targetChar then
@@ -1309,14 +718,12 @@ local function createPlayerButton(targetPlayer)
 				local targetRoot = targetChar:FindFirstChild("HumanoidRootPart")
 				if root and targetRoot then
 					root.CFrame = targetRoot.CFrame + Vector3.new(2, 0, 0)
-					setStatus("Teleported to " .. targetPlayer.Name, GREEN)
 				end
 			end
-		elseif activeNavItem == navItems[2] then
+		elseif feature == "Current Selected: Aimlock" then
 			startAimlock(targetPlayer)
 		end
 	end)
-
 	playerButtons[targetPlayer] = btn
 	updateCanvas()
 end
@@ -1332,23 +739,62 @@ Players.PlayerRemoving:Connect(function(plr)
 end)
 UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvas)
 
-local function shouldShowPlayerList()
-	return activeNavItem == navItems[1] or activeNavItem == navItems[2]
-end
+local currentFeature = nil
 
-for _, item in ipairs(navItems) do
-	local capturedItem = item
-	item.btn.MouseButton1Click:Connect(function()
-		PlayerList.Visible = shouldShowPlayerList()
+local function selectFeature(featureName, showPlayerList, showAmount, showColorPanel)
+	if currentFeature == featureName then
+		currentFeature = nil
+		Currentselected.Text = "Current Selected: None"
+		PlayerList.Visible = false
+		AmountTextBox.Visible = false
 		ColorPanel.Visible = false
-		ColorOpenDot.BackgroundColor3 = TEXT_MUTED
-		ColorOpenBtn.Text = "Open Color Panel"
-	end)
+		CurrentSelectedPlayer.Text = "Current Selected Player: None"
+		if featureName == "Aimlock" then stopAimlock() end
+		if featureName == "Fly" then stopFly() end
+		if featureName == "TpWalk" then stopTpWalk() end
+		if featureName == "Color" then stopColor() end
+		return
+	end
+
+	-- Stop old features when switching
+	if currentFeature == "Aimlock" then stopAimlock() end
+	if currentFeature == "Fly" then stopFly() end
+	if currentFeature == "TpWalk" then stopTpWalk() end
+	if currentFeature == "Color" then stopColor() end
+
+	currentFeature = featureName
+	Currentselected.Text = "Current Selected: " .. featureName
+	PlayerList.Visible = showPlayerList or false
+	AmountTextBox.Visible = showAmount or false
+	ColorPanel.Visible = showColorPanel or false
+
+	if not showPlayerList then
+		CurrentSelectedPlayer.Text = "Current Selected Player: None"
+	end
 end
 
-TpNavBtn.MouseButton1Click:Connect(function() PlayerList.Visible = true end)
-AimNavBtn.MouseButton1Click:Connect(function() PlayerList.Visible = true end)
-FlyNavBtn.MouseButton1Click:Connect(function() PlayerList.Visible = false end)
-TpWalkNavBtn.MouseButton1Click:Connect(function() PlayerList.Visible = false end)
-MouseNavBtn.MouseButton1Click:Connect(function() PlayerList.Visible = false end)
-ColorNavBtn.MouseButton1Click:Connect(function() PlayerList.Visible = false end)
+Tp.MouseButton1Click:Connect(function()
+	selectFeature("TP", true, false, false)
+end)
+
+Aimlock.MouseButton1Click:Connect(function()
+	selectFeature("Aimlock", true, false, false)
+end)
+
+Fly.MouseButton1Click:Connect(function()
+	selectFeature("Fly", false, true, false)
+	if currentFeature == "Fly" then
+		if flying then stopFly() else startFly() end
+	end
+end)
+
+TpWalk.MouseButton1Click:Connect(function()
+	selectFeature("TpWalk", false, true, false)
+	if currentFeature == "TpWalk" then
+		if tpwalking then stopTpWalk() else startTpWalk() end
+	end
+end)
+
+ColorBtn.MouseButton1Click:Connect(function()
+	selectFeature("Color", false, false, true)
+end)
